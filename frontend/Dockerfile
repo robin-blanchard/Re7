@@ -12,7 +12,7 @@ COPY --from=build /build/ /usr/share/nginx/html/
 
 
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
 COPY boot.sh .
 RUN chmod +x /boot.sh && dos2unix /boot.sh
