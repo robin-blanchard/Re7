@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: db
+    environment:
+      - POSTGRES_USER=re7
+      - POSTGRES_PASSWORD=re7
+      - POSTGRES_DB=re7
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
