@@ -11,19 +11,19 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+BASE_LOC = environ.Path(__file__)-2
+dotenv = str(BASE_LOC.path(".env"))
+if os.path.exists(dotenv):
+    env.read_env(dotenv)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z+wcw#y8^ry(%=+%*b_0*hq6&uuil!*$3dqo^svi3(+f1u48-v'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = env("SECRET_KEY")
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -74,10 +74,7 @@ WSGI_APPLICATION = 're7.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': env.db()
 }
 
 
@@ -105,11 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
+TIME_ZONE = 'Europe/Paris'
 
 USE_TZ = True
 
