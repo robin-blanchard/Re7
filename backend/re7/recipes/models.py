@@ -13,8 +13,8 @@ class Recipe(models.Model):
                          (HARD, "Difficile"))
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    creation_date = models.DateField(auto_now_add=True, editable=False)
-    update_date = models.DateField(auto_now=True, editable=False)
+    creation_date = models.DateTimeField(auto_now_add=True, editable=False)
+    update_date = models.DateTimeField(auto_now=True, editable=False)
 
     name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=1, choices=DIFFICULTY_LEVELS)
