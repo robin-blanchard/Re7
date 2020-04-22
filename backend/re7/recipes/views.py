@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from re7.recipes.models import Recipe
+from re7.recipes.serializers import RecipeSerializer
 
-# Create your views here.
+
+class RecipesListView(generics.ListAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
