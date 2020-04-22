@@ -4,6 +4,8 @@ services:
   frontend:
     build:
       context: .
+      args:
+        - REACT_APP_BACKEND_URL=http://127.0.0.1:9090/api/
     ports:
       - 9091:80
     environment:

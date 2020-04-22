@@ -39,7 +39,7 @@ function App() {
   const [recipesItems, setRecipesItems] = useState(initialRecipesItems);
 
   useEffect(() => {
-    const url = "http://127.0.0.1:9090/api/";
+    const url = process.env.REACT_APP_BACKEND_URL;
     Axios.get(url)
       .then((response) => {
         setRecipesItems(response.data);
