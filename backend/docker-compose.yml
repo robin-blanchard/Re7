@@ -20,7 +20,7 @@ services:
     environment:
       - PORT=80
       - DATABASE_URL=postgresql://re7:re7@db:5432/re7
-      - CORS_ORIGIN_WHITELIST=http://localhost:8080,http://localhost:9091
+      - CORS_ORIGIN_WHITELIST=http://localhost:9091,http://localhost:3000,http://127.0.0.1:9091,http://127.0.0.1:3000
     ports:
       - 9090:80
     depends_on:
