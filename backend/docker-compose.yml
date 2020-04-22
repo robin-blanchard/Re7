@@ -13,5 +13,17 @@ services:
     volumes:
       - data:/var/lib/postgresql/data
 
+  backend:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - PORT=80
+      - DATABASE_URL=postgresql://re7:re7@db:5432/re7
+    ports:
+      - 9090:80
+    depends_on:
+      - db
+
 volumes:
   data:
