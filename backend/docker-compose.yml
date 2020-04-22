@@ -16,7 +16,7 @@ services:
   backend:
     build: .
     env_file:
-      - .env
+      - ./.env
     environment:
       - PORT=80
       - DATABASE_URL=postgresql://re7:re7@db:5432/re7
