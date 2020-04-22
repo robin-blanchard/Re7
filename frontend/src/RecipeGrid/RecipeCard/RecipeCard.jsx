@@ -7,7 +7,7 @@ function RecipeCard(props) {
       <Card.Img variant="top" src="https://via.placeholder.com/150x70" />
       <Card.Body>
         <Card.Title>{props.item.name}</Card.Title>
-        <Card.Text>{props.item.text}</Card.Text>
+        <Card.Text>{props.item.text ? props.item.text : "aa"}</Card.Text>
       </Card.Body>
     </Card>
   );
