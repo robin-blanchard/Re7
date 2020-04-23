@@ -2,7 +2,7 @@ import arrow
 
 from django.contrib import admin
 
-from re7.recipes.models import Recipe
+from re7.recipes.models import Recipe, Product, Ingredient
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -24,5 +24,19 @@ class RecipeAdmin(admin.ModelAdmin):
                     "get_update_date", "get_difficulty", "total_time")
 
 
+class ProductAdmin(admin.ModelAdmin):
+    model = Product
+
+    list_display = ("name",)
+
+
+class IngredientAdmin(admin.ModelAdmin):
+    model = Ingredient
+
+    list_display = ("recipe", "product", "quantity", "unit")
+
+
 # Register your models here.
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Ingredient, IngredientAdmin)
