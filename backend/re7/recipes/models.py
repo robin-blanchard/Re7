@@ -24,3 +24,31 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Product(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    G = "g"
+    KG = "kg"
+    L = "L"
+    cL = "cL"
+    UNIT_MEASURES = ((G, "g"),
+                     (KG, "kg"),
+                     (L, "L"),
+                     (cL, "cL"))
+    quantity = models.PositiveSmallIntegerField()
+    unit = models.CharField(max_length=5, choices=UNIT_MEASURES)
+
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return f"{self.quantity} {self.unit} de {self.product.name}"
