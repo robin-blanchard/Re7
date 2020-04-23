@@ -47,7 +47,8 @@ class Ingredient(models.Model):
     quantity = models.PositiveSmallIntegerField()
     unit = models.CharField(max_length=5, choices=UNIT_MEASURES)
 
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(
+        Recipe, related_name="ingredients", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
