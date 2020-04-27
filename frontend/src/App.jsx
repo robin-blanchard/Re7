@@ -39,7 +39,7 @@ function App() {
   const [recipesItems, setRecipesItems] = useState(initialRecipesItems);
 
   useEffect(() => {
-    const url = process.env.REACT_APP_BACKEND_URL;
+    const url = process.env.REACT_APP_BACKEND_URL + "recipes";
     Axios.get(url)
       .then((response) => {
         setRecipesItems(response.data);
