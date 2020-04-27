@@ -1,5 +1,5 @@
 from rest_framework import generics
-from re7.recipes.models import Recipe, Product, Ingredient
+from re7.recipes.models import Recipe, Product
 from re7.recipes.serializers import RecipeSerializer, ProductSerializer
 
 
