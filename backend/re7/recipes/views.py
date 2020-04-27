@@ -8,6 +8,11 @@ class RecipesListView(generics.ListCreateAPIView):
     serializer_class = RecipeSerializer
 
 
+class RecipeDetailView(generics.RetrieveAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+
+
 class ProductsListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
