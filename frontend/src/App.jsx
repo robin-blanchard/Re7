@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 
 import RecipeGrid from "./RecipeGrid/RecipeGrid";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
+import AddRecipe from "./AddRecipe/AddRecipe";
 
 import "./App.css";
 
@@ -18,8 +19,11 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/recipes">Recipes</Nav.Link>
-            <Nav.Link href="/products">Products</Nav.Link>
+            <Nav.Link href="/recipes">Recettes</Nav.Link>
+            <Nav.Link href="/recipes/add_recipe">
+              Ajouter une nouvelle recette
+            </Nav.Link>
+            <Nav.Link href="/products">Produits</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -27,6 +31,9 @@ function App() {
       <Col md={9} className="mx-auto">
         <BrowserRouter>
           <Switch>
+            <Route exact path="/recipes/add_recipe">
+              <AddRecipe />
+            </Route>
             <Route path="/recipes/:id">
               <RecipeDetail />
             </Route>
