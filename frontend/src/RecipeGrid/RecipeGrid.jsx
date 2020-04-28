@@ -45,7 +45,11 @@ function RecipeGrid() {
   return (
     <CardColumns>
       {recipesItems.map((item, idx) => (
-        <Link key={idx} to={`/${item.id}`}>
+        <Link
+          key={idx}
+          to={`/${item.id}`}
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
           <RecipeCard key={idx} item={item} />
         </Link>
       ))}
