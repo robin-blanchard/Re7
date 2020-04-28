@@ -21,14 +21,25 @@ function RecipeGrid() {
   const [recipesItems, setRecipesItems] = useState(initialRecipesItems);
 
   useEffect(() => {
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
+
     const url = process.env.REACT_APP_BACKEND_URL + "recipes";
-    Axios.get(url)
-      .then((response) => {
-        setRecipesItems(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    const loadData = () => {
+      Axios.get(url, { cancelToken: source.token })
+        .then((response) => {
+          setRecipesItems(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    loadData();
+    return () => {
+      source.cancel();
+    };
   });
 
   return (
