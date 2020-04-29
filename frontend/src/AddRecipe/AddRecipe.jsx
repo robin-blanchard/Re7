@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import Axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 function AddRecipe() {
+  const [recipeName, setRecipeName] = useState("");
+  const [difficulty, setDifficulty] = useState("1");
   const [prepTime, setPrepTime] = useState(0);
   const [bakeTime, setBakeTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
@@ -12,7 +15,7 @@ function AddRecipe() {
     {
       quantity: 0,
       unit: "kg",
-      product: "",
+      product: { id: "", name: "" },
     },
   ]);
 
@@ -22,7 +25,7 @@ function AddRecipe() {
       {
         quantity: 0,
         unit: "kg",
-        product: "",
+        product: { id: "", name: "" },
       },
     ]);
   };
@@ -50,20 +53,40 @@ function AddRecipe() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
-    console.log(data);
+    const data = {
+      name: recipeName,
+      difficulty: difficulty,
+      prep_time: prepTime,
+      bake_time: bakeTime,
+      total_time: totalTime,
+      ingredients: ingredients,
+    };
+    Axios.post(process.env.REACT_APP_BACKEND_URL + "recipes", data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="form.ControlName">
         <Form.Label>Nom de la recette</Form.Label>
-        <Form.Control placeholder="Purée" />
+        <Form.Control
+          value={recipeName}
+          onChange={(e) => setRecipeName(e.target.value)}
+        />
       </Form.Group>
 
       <Form.Group controlId="form.ControlDifficulty">
         <Form.Label>Difficulté</Form.Label>
-        <Form.Control as="select">
+        <Form.Control
+          as="select"
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+        >
           <option value="1">Simple</option>
           <option value="2">Modéré</option>
           <option value="3">Difficile</option>
@@ -132,9 +155,9 @@ function AddRecipe() {
 
           <Form.Group as={Col} md={3}>
             <Form.Control
-              value={ingredientItem.product}
+              value={ingredientItem.product.name}
               onChange={(e) => {
-                updateIngredient(idx, "product", e.target.value);
+                updateIngredient(idx, "product", { name: e.target.value });
               }}
             />
           </Form.Group>
