@@ -90,7 +90,14 @@ function RecipeDetail(props) {
                 ))
               : "Ingredients"}
           </Col>
-          <Col md="auto">Instructions</Col>
+          <Col md="auto">
+            Instructions
+            {RecipeDetails.instructions
+              ? RecipeDetails.instructions.map((instruction, idx) => (
+                  <li key={idx}>{instruction.text}</li>
+                ))
+              : "Ingredients"}
+          </Col>
         </Row>
       </Col>
 
