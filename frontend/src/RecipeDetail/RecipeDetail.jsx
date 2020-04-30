@@ -93,9 +93,11 @@ function RecipeDetail(props) {
           <Col md="auto">
             Instructions
             {RecipeDetails.instructions
-              ? RecipeDetails.instructions.map((instruction, idx) => (
-                  <li key={idx}>{instruction.text}</li>
-                ))
+              ? RecipeDetails.instructions
+                  .sort((a, b) => (a.order < b.order ? -1 : 1))
+                  .map((instruction, idx) => (
+                    <li key={idx}>{instruction.text}</li>
+                  ))
               : "Ingredients"}
           </Col>
         </Row>
