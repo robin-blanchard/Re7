@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
+import useIngredientState from "./useIngredientsState";
+
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -11,32 +13,17 @@ function AddRecipe() {
   const [prepTime, setPrepTime] = useState(0);
   const [bakeTime, setBakeTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
-  const [ingredients, setIngredients] = useState([
-    {
-      quantity: 0,
-      unit: "kg",
-      product: { id: "", name: "" },
-    },
-  ]);
 
-  const addIngredient = () => {
-    setIngredients([
-      ...ingredients,
-      {
-        quantity: 0,
-        unit: "kg",
-        product: { id: "", name: "" },
-      },
-    ]);
-  };
-  const deleteIngredient = (indexToRemove) => {
-    setIngredients(ingredients.filter((_, idx) => idx !== indexToRemove));
-  };
-  const updateIngredient = (ingredientIndex, fieldToUpdate, value) => {
-    const newIngredients = ingredients.slice();
-    newIngredients[ingredientIndex][fieldToUpdate] = value;
-    setIngredients(newIngredients);
-  };
+  const [
+    ingredients,
+    addIngredient,
+    deleteIngredient,
+    updateIngredient,
+  ] = useIngredientState({
+    quantity: 0,
+    unit: "kg",
+    product: { id: "", name: "" },
+  });
 
   const onChangeShouldBePositive = (e, setValue) => {
     if (e.target.value === "") {
