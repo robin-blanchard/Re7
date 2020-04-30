@@ -53,3 +53,14 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f"{self.quantity} {self.unit} de {self.product.name}"
+
+
+class Instruction(models.Model):
+    text = models.CharField(max_length=200)
+    order = models.PositiveSmallIntegerField()
+
+    recipe = models.ForeignKey(
+        Recipe, related_name="instructions", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
