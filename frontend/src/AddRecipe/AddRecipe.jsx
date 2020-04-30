@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
-import useIngredientState from "./useIngredientsState";
+import useElementsState from "./useElementsState";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -19,10 +19,20 @@ function AddRecipe() {
     addIngredient,
     deleteIngredient,
     updateIngredient,
-  ] = useIngredientState({
+  ] = useElementsState({
     quantity: 0,
     unit: "kg",
     product: { id: "", name: "" },
+  });
+
+  const [
+    instructions,
+    addInstruction,
+    deleteInstruction,
+    updateInstruction,
+  ] = useElementsState({
+    order: 0,
+    text: "",
   });
 
   const onChangeShouldBePositive = (e, setValue) => {
@@ -108,7 +118,7 @@ function AddRecipe() {
       </Form.Row>
       <Form.Row>
         <Form.Label>Ingrédients</Form.Label>
-        <Button onClick={addIngredient}>Plus</Button>
+        <Button onClick={() => addIngredient()}>Plus</Button>
       </Form.Row>
 
       {ingredients.map((ingredientItem, idx) => (
@@ -158,6 +168,41 @@ function AddRecipe() {
           </Button>
         </Form.Row>
       ))}
+
+      <Form.Row>
+        <Form.Label>Instructions</Form.Label>
+        <Button
+          onClick={() =>
+            addInstruction({
+              order: instructions.length,
+              text: "",
+            })
+          }
+        >
+          Plus
+        </Button>
+      </Form.Row>
+
+      {instructions.map((instructionItem, idx) => (
+        <Form.Row key={idx}>
+          <Form.Group as={Col} md={2}>
+            <Form.Control
+              value={instructionItem.text}
+              onChange={(e) => {
+                updateInstruction(idx, "text", e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Button
+            onClick={(e) => {
+              deleteInstruction(idx);
+            }}
+          >
+            Delete
+          </Button>
+        </Form.Row>
+      ))}
+      {}
       <Button type="submit">Submit</Button>
     </Form>
   );
