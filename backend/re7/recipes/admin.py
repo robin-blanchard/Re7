@@ -2,7 +2,7 @@ import arrow
 
 from django.contrib import admin
 
-from re7.recipes.models import Recipe, Product, Ingredient
+from re7.recipes.models import Recipe, Product, Ingredient, Instruction
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -36,7 +36,14 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ("recipe", "product", "quantity", "unit")
 
 
+class InstructionAdmin(admin.ModelAdmin):
+    model = Instruction
+
+    list_display = ("recipe", "order", "text")
+
+
 # Register your models here.
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Instruction, InstructionAdmin)
