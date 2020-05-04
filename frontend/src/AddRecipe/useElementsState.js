@@ -18,7 +18,11 @@ const useElementsState = (initialValue) => {
     setElements(newElements);
   };
 
-  return [elements, addElement, deleteElement, updateElement];
+  const resetElements = () => {
+    setElements([initialValue]);
+  };
+
+  return [elements, addElement, deleteElement, updateElement, resetElements];
 };
 
 export default useElementsState;
