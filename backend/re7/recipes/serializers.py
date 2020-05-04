@@ -27,8 +27,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     instructions = InstructionSerializer(many=True, read_only=False)
 
     class Meta:
-        fields = ["id", "update_date", "name", "difficulty",
-                  "prep_time", "bake_time", "total_time", "ingredients", "instructions"]
+        fields = "__all__"
         model = Recipe
 
     def create(self, validated_data):

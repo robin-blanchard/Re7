@@ -35,7 +35,7 @@ function RecipeDetail(props) {
   return (
     <Container fluid>
       <Col md={9} className="mx-auto text-center">
-        <Image src="https://via.placeholder.com/3500x1000" fluid />
+        <Image src={RecipeDetails.photo} fluid />
         <h1>{RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}</h1>
         <Row>
           <Col md={4}>
