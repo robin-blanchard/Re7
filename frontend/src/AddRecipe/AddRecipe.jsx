@@ -14,6 +14,7 @@ function AddRecipe() {
   const [prepTime, setPrepTime] = useState(0);
   const [bakeTime, setBakeTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
+  const [recipePhoto, setRecipePhoto] = useState(null);
 
   const [
     ingredients,
@@ -65,21 +66,32 @@ function AddRecipe() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const orderedIstructions = instructions.map((item, idx) => ({
+    const orderedInstructions = instructions.map((item, idx) => ({
       order: idx,
       text: item.text,
     }));
 
-    const data = {
-      name: recipeName,
-      difficulty: difficulty,
-      prep_time: prepTime,
-      bake_time: bakeTime,
-      total_time: totalTime,
-      ingredients: ingredients,
-      instructions: orderedIstructions,
-    };
-    Axios.post(process.env.REACT_APP_BACKEND_URL + "recipes", data)
+    const formData = new FormData();
+    formData.append("name", recipeName);
+    formData.append("difficulty", difficulty);
+    formData.append("prep_time", prepTime);
+    formData.append("bake_time", bakeTime);
+    formData.append("total_time", totalTime);
+
+    formData.append("ingredients", JSON.stringify(ingredients));
+    formData.append("instructions", JSON.stringify(orderedInstructions));
+
+    if (!!recipePhoto) {
+      formData.set("photo", recipePhoto);
+    }
+
+    console.log(...formData);
+
+    Axios.post(process.env.REACT_APP_BACKEND_URL + "recipes", formData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    })
       .then(function (response) {
         setShowAlert(true);
         setAlertType("success");
@@ -92,7 +104,6 @@ function AddRecipe() {
         console.log(response);
       });
   };
-
   return (
     <Fragment>
       <SubmissionAlert
@@ -106,6 +117,18 @@ function AddRecipe() {
           <Form.Control
             value={recipeName}
             onChange={(e) => setRecipeName(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Photo</Form.Label>
+          <Form.File
+            id="custom-file"
+            label={recipePhoto ? recipePhoto.name : "Photo"}
+            custom
+            onChange={(e) => {
+              console.log(e.target.files[0]);
+              setRecipePhoto(e.target.files[0]);
+            }}
           />
         </Form.Group>
 
