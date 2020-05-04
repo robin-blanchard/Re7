@@ -22,6 +22,9 @@ class Recipe(models.Model):
     bake_time = models.PositiveSmallIntegerField()
     total_time = models.PositiveSmallIntegerField()
 
+    photo = models.ImageField(
+        upload_to="photos", default="recipe-default-image.jpg")
+
     def __str__(self):
         return self.name
 

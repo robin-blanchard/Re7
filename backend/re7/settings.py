@@ -112,8 +112,16 @@ TIME_ZONE = 'Europe/Paris'
 USE_TZ = True
 
 
+# File storage
+
+GOOGLE_APPLICATION_CREDENTIALS = env("GOOGLE_APPLICATION_CREDENTIALS")
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 're7app-images'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = str(BASE_LOC.path("staticfiles"))
