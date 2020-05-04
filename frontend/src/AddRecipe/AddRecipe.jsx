@@ -50,6 +50,11 @@ function AddRecipe() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const orderedIstructions = instructions.map((item, idx) => ({
+      order: idx,
+      text: item.text,
+    }));
+
     const data = {
       name: recipeName,
       difficulty: difficulty,
@@ -57,6 +62,7 @@ function AddRecipe() {
       bake_time: bakeTime,
       total_time: totalTime,
       ingredients: ingredients,
+      instructions: orderedIstructions,
     };
     Axios.post(process.env.REACT_APP_BACKEND_URL + "recipes", data)
       .then(function (response) {
@@ -193,6 +199,7 @@ function AddRecipe() {
               }}
             />
           </Form.Group>
+          {instructionItem.order}
           <Button
             onClick={(e) => {
               deleteInstruction(idx);
