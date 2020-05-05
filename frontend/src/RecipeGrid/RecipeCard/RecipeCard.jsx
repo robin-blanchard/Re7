@@ -6,16 +6,16 @@ import Col from "react-bootstrap/Col";
 import { FaStopwatch } from "react-icons/fa";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
-import "../../recipe-image.css";
+import "../../image-center-crop.css";
 
 function RecipeCard(props) {
   return (
     <Card>
-      <div style={{ width: "100%", height: "20vh" }}>
+      <div className="image-ccrop-container">
         <Card.Img
           variant="top"
           src={props.item.photo}
-          className="recipe-image"
+          className="image-ccrop"
         />
       </div>
 

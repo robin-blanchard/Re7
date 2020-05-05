@@ -10,7 +10,7 @@ import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
 
-import "../recipe-image.css";
+import "../image-center-crop.css";
 
 function RecipeDetail(props) {
   const { id } = useParams();
@@ -48,13 +48,13 @@ function RecipeDetail(props) {
       />
       <Container fluid>
         <Col md={9} className="mx-auto text-center">
-          <Row style={{ height: "30vh" }}>
+          <div className="image-ccrop-container">
             <Image
               src={RecipeDetails.photo}
-              className="recipe-image"
+              className="image-ccrop"
               onClick={() => setShowModal(true)}
             />
-          </Row>
+          </div>
 
           <h1>
             {RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}
