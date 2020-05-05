@@ -2,13 +2,23 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
 import { FaStopwatch } from "react-icons/fa";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
+
+import "../../recipe-image.css";
 
 function RecipeCard(props) {
   return (
     <Card>
-      <Card.Img variant="top" src="https://via.placeholder.com/150x70" />
+      <div style={{ width: "100%", height: "20vh" }}>
+        <Card.Img
+          variant="top"
+          src={props.item.photo}
+          className="recipe-image"
+        />
+      </div>
+
       <Card.Body>
         <Card.Title className="text-center">{props.item.name}</Card.Title>
         <Row>

@@ -10,7 +10,7 @@ import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
 
-import "./RecipeDetail.css";
+import "../recipe-image.css";
 
 function RecipeDetail(props) {
   const { id } = useParams();
