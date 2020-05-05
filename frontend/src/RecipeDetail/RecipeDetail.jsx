@@ -8,9 +8,14 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
+import ImageModal from "./ImageModal";
+
+import "./RecipeDetail.css";
+
 function RecipeDetail(props) {
   const { id } = useParams();
   const [RecipeDetails, setRecipeDetails] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const CancelToken = Axios.CancelToken;
@@ -31,79 +36,97 @@ function RecipeDetail(props) {
     return () => {
       source.cancel();
     };
-  });
-  return (
-    <Container fluid>
-      <Col md={9} className="mx-auto text-center">
-        <Image src={RecipeDetails.photo} fluid />
-        <h1>{RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}</h1>
-        <Row>
-          <Col md={4}>
-            <Row>
-              <p className="mx-auto">Difficulté</p>
-            </Row>
-            <Row>
-              <p className="mx-auto">
-                {RecipeDetails.difficulty === "1" ? (
-                  <WiDaySunny size={45} />
-                ) : RecipeDetails.difficulty === "2" ? (
-                  <WiCloudy size={45} />
-                ) : (
-                  <WiThunderstorm size={45} />
-                )}
-              </p>
-            </Row>
-          </Col>
-          <Col md={4}>
-            <Row>
-              <p className="mx-auto">Temps de préparation</p>
-            </Row>
-            <Row>
-              <p className="mx-auto">
-                {RecipeDetails.prep_time
-                  ? RecipeDetails.prep_time
-                  : "Temps de préparation"}
-              </p>
-            </Row>
-          </Col>
-          <Col md={4}>
-            <Row>
-              <p className="mx-auto">Temps de cuisson</p>
-            </Row>
-            <Row>
-              <p className="mx-auto">
-                {RecipeDetails.bake_time
-                  ? RecipeDetails.bake_time
-                  : "Temps de cuisson"}
-              </p>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={4}>
-            {RecipeDetails.ingredients
-              ? RecipeDetails.ingredients.map((ingredient, idx) => (
-                  <li key={idx}>
-                    {ingredient.product.name} : {ingredient.quantity}{" "}
-                    {ingredient.unit}
-                  </li>
-                ))
-              : "Ingredients"}
-          </Col>
-          <Col md="auto">
-            Instructions
-            {RecipeDetails.instructions
-              ? RecipeDetails.instructions
-                  .sort((a, b) => (a.order < b.order ? -1 : 1))
-                  .map((instruction, idx) => (
-                    <li key={idx}>{instruction.text}</li>
-                  ))
-              : "Ingredients"}
-          </Col>
-        </Row>
-      </Col>
+  }, []);
 
-      <Row></Row>
+  return (
+    <Container>
+      <ImageModal
+        show={showModal}
+        title={RecipeDetails.name}
+        photo={RecipeDetails.photo}
+        handleClose={() => setShowModal(false)}
+      />
+      <Container fluid>
+        <Col md={9} className="mx-auto text-center">
+          <Row style={{ height: "30vh" }}>
+            <Image
+              src={RecipeDetails.photo}
+              className="recipe-image"
+              onClick={() => setShowModal(true)}
+            />
+          </Row>
+
+          <h1>
+            {RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}
+          </h1>
+          <Row>
+            <Col md={4}>
+              <Row>
+                <p className="mx-auto">Difficulté</p>
+              </Row>
+              <Row>
+                <p className="mx-auto">
+                  {RecipeDetails.difficulty === "1" ? (
+                    <WiDaySunny size={45} />
+                  ) : RecipeDetails.difficulty === "2" ? (
+                    <WiCloudy size={45} />
+                  ) : (
+                    <WiThunderstorm size={45} />
+                  )}
+                </p>
+              </Row>
+            </Col>
+            <Col md={4}>
+              <Row>
+                <p className="mx-auto">Temps de préparation</p>
+              </Row>
+              <Row>
+                <p className="mx-auto">
+                  {RecipeDetails.prep_time
+                    ? RecipeDetails.prep_time
+                    : "Temps de préparation"}
+                </p>
+              </Row>
+            </Col>
+            <Col md={4}>
+              <Row>
+                <p className="mx-auto">Temps de cuisson</p>
+              </Row>
+              <Row>
+                <p className="mx-auto">
+                  {RecipeDetails.bake_time
+                    ? RecipeDetails.bake_time
+                    : "Temps de cuisson"}
+                </p>
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
+              {RecipeDetails.ingredients
+                ? RecipeDetails.ingredients.map((ingredient, idx) => (
+                    <li key={idx}>
+                      {ingredient.product.name} : {ingredient.quantity}{" "}
+                      {ingredient.unit}
+                    </li>
+                  ))
+                : "Ingredients"}
+            </Col>
+            <Col md="auto">
+              Instructions
+              {RecipeDetails.instructions
+                ? RecipeDetails.instructions
+                    .sort((a, b) => (a.order < b.order ? -1 : 1))
+                    .map((instruction, idx) => (
+                      <li key={idx}>{instruction.text}</li>
+                    ))
+                : "Ingredients"}
+            </Col>
+          </Row>
+        </Col>
+
+        <Row></Row>
+      </Container>
     </Container>
   );
 }
