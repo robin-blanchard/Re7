@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    're7.recipes.apps.RecipesConfig'
+    're7.recipes.apps.RecipesConfig',
+    're7.authentication.apps.AuthenticationConfig'
 ]
 
 MIDDLEWARE = [
