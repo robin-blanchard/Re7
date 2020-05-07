@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
-function LoginNavbar() {
+function LoginNavbar(props) {
   return (
     <Navbar bg="primary" expand="lg">
       <Navbar.Brand href="/">Re7</Navbar.Brand>
@@ -17,7 +17,11 @@ function LoginNavbar() {
           <Nav.Link href="/products">Produits</Nav.Link>
         </Nav>
         <Nav className="ml-auto">
-          <Nav.Link href="/login">Login</Nav.Link>
+          {props.logged ? (
+            <Navbar.Text>Logged!</Navbar.Text>
+          ) : (
+            <Nav.Link href="/login">Login</Nav.Link>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

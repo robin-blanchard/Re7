@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
@@ -12,9 +12,27 @@ import Login from "./Login/Login";
 import "./App.css";
 
 function App() {
+  const [logged, setLogged] = useState(false);
+
+  const handleLogin = () => {
+    setLogged(true);
+  };
+  const handleSignOut = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    setLogged(false);
+  };
+
+  useEffect(() => {
+    //to do: check connection, refresh token if necessary
+    if (!!localStorage.getItem("access_token")) {
+      handleLogin();
+    }
+  }, []);
+
   return (
     <Fragment>
-      <LoginNavbar />
+      <LoginNavbar logged={logged} />
 
       <Col md={9} className="mx-auto">
         <BrowserRouter>
@@ -29,7 +47,11 @@ function App() {
               <RecipeGrid />
             </Route>
             <Route path="/login">
-              <Login />
+              <Login
+                logged={logged}
+                handleLogin={handleLogin}
+                handleSignOut={handleSignOut}
+              />
             </Route>
           </Switch>
         </BrowserRouter>

@@ -85,11 +85,10 @@ function AddRecipe() {
       formData.set("photo", recipePhoto);
     }
 
-    console.log(...formData);
-
     Axios.post(process.env.REACT_APP_BACKEND_URL + "api/recipes", formData, {
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: "JWT " + localStorage.getItem("access_token"),
       },
     })
       .then(function (response) {
