@@ -21,7 +21,7 @@ function RecipeDetail(props) {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
 
-    const url = process.env.REACT_APP_BACKEND_URL + "recipes/" + id;
+    const url = process.env.REACT_APP_BACKEND_URL + "api/recipes/" + id;
 
     const loadData = () => {
       Axios.get(url, { cancelToken: source.token })

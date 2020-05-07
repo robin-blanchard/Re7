@@ -24,7 +24,7 @@ function RecipeGrid() {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
 
-    const url = process.env.REACT_APP_BACKEND_URL + "recipes";
+    const url = process.env.REACT_APP_BACKEND_URL + "api/recipes";
 
     const loadData = () => {
       Axios.get(url, { cancelToken: source.token })

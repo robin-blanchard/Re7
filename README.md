@@ -13,13 +13,13 @@ To install dependencies and run the frontend on the development server:
 
 ```
 npm install
-REACT_APP_BACKEND_URL=http://127.0.0.1:8000/api/ npm start
+REACT_APP_BACKEND_URL=http://127.0.0.1:8000/ npm start
 ```
 
 To run the frontend inside a Docker container:
 
 ```
-docker build -t re7-frontend . --build-arg REACT_APP_BACKEND_URL=http://127.0.0.1:8000/api/
+docker build -t re7-frontend . --build-arg REACT_APP_BACKEND_URL=http://127.0.0.1:8000/
 docker run -d --name frontend -p 3000:80 -e PORT=80 re7-frontend
 ```
 
@@ -29,7 +29,7 @@ To deploy frontend container to Heroku app:
 heroku login
 heroku git:remote -a frontend_app_name
 heroku container:login
-heroku container:push web --arg REACT_APP_BACKEND_URL=https://backend_app_name.herokuapp.com/api/
+heroku container:push web --arg REACT_APP_BACKEND_URL=https://backend_app_name.herokuapp.com/
 heroku container:release web
 ```
 

@@ -87,7 +87,7 @@ function AddRecipe() {
 
     console.log(...formData);
 
-    Axios.post(process.env.REACT_APP_BACKEND_URL + "recipes", formData, {
+    Axios.post(process.env.REACT_APP_BACKEND_URL + "api/recipes", formData, {
       headers: {
         "content-type": "multipart/form-data",
       },
