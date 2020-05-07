@@ -1,5 +1,7 @@
 import json
 
+from django.http import QueryDict
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -12,7 +14,11 @@ class RecipesListView(generics.ListCreateAPIView):
     serializer_class = RecipeSerializer
 
     def post(self, request):
-        data = request.data.dict()
+        data = request.data
+
+        if isinstance(data, QueryDict):
+            data = data.dict()
+
         if isinstance(data["ingredients"], str):
             data["ingredients"] = json.loads(data["ingredients"])
 
