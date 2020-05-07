@@ -13,7 +13,7 @@ class RecipesListView(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         data = request.data
 
         if isinstance(data, QueryDict):

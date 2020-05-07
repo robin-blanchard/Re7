@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics, permissions
 
 from re7.authentication.models import CustomUser
