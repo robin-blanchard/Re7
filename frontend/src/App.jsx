@@ -8,7 +8,7 @@ import MainRecipesPage from "./MainRecipesPage/MainRecipesPage";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
 import AddRecipe from "./AddRecipe/AddRecipe";
 import Login from "./Login/Login";
-import Profile from "./Profile/Profile";
+import UserPage from "./UserPage/UserPage";
 
 import "./App.css";
 
@@ -51,7 +51,7 @@ function App() {
               <Login handleLogin={handleLogin} />
             </Route>
             <Route path="/profile/:username">
-              <Profile />
+              <UserPage />
             </Route>
           </Switch>
         </BrowserRouter>
