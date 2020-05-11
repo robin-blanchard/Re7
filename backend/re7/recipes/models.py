@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 
+from re7.authentication.models import CustomUser, deleted_user
+
 # Create your models here.
 
 
@@ -15,6 +17,8 @@ class Recipe(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     creation_date = models.DateTimeField(auto_now_add=True, editable=False)
     update_date = models.DateTimeField(auto_now=True, editable=False)
+    creater = models.ForeignKey(
+        CustomUser, on_delete=models.SET_DEFAULT, default=deleted_user)
 
     name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=1, choices=DIFFICULTY_LEVELS)

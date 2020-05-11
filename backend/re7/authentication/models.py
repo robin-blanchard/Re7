@@ -6,3 +6,7 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     age = models.PositiveSmallIntegerField(null=True)
+
+
+def deleted_user():
+    return CustomUser.objects.get(username="deleted_user").pk
