@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Fragment>
-      <LoginNavbar logged={logged} />
+      <LoginNavbar logged={logged} handleSignOut={handleSignOut} />
 
       <Col md={9} className="mx-auto">
         <BrowserRouter>
@@ -47,11 +47,7 @@ function App() {
               <RecipeGrid />
             </Route>
             <Route path="/login">
-              <Login
-                logged={logged}
-                handleLogin={handleLogin}
-                handleSignOut={handleSignOut}
-              />
+              <Login handleLogin={handleLogin} />
             </Route>
           </Switch>
         </BrowserRouter>

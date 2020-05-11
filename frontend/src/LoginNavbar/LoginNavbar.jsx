@@ -3,6 +3,8 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+
 function LoginNavbar(props) {
   return (
     <Navbar bg="primary" expand="lg">
@@ -18,9 +20,16 @@ function LoginNavbar(props) {
         </Nav>
         <Nav className="ml-auto">
           {props.logged ? (
-            <Navbar.Text>Logged!</Navbar.Text>
+            <Navbar.Text>
+              <div onClick={props.handleSignOut} style={{ cursor: "pointer" }}>
+                {" "}
+                Se déconnecter <FaSignOutAlt />
+              </div>
+            </Navbar.Text>
           ) : (
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/login">
+              Se connecter <FaSignInAlt />
+            </Nav.Link>
           )}
         </Nav>
       </Navbar.Collapse>

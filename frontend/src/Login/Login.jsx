@@ -35,47 +35,36 @@ function Login(props) {
       });
   };
 
-  if (props.logged) {
-    return (
-      <Fragment>
-        <p>Already logged !</p>
-        <Button variant="danger" onClick={props.handleSignOut}>
-          Sign out
-        </Button>
-      </Fragment>
-    );
-  } else {
-    return (
-      <Fragment>
-        <Alert
-          show={showFailAlert}
-          variant="danger"
-          onClose={() => setShowFailAlert(false)}
-          dismissible
-        >
-          Oups, vos identifiants ne fonctionnent pas. Veuillez ré-essayer
-        </Alert>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Nom d'utilisateur</Form.Label>
-            <Form.Control
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Mot de passe</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button type="submit">Se connecter</Button>
-        </Form>
-      </Fragment>
-    );
-  }
+  return (
+    <Fragment>
+      <Alert
+        show={showFailAlert}
+        variant="danger"
+        onClose={() => setShowFailAlert(false)}
+        dismissible
+      >
+        Oups, vos identifiants ne fonctionnent pas. Veuillez ré-essayer
+      </Alert>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Nom d'utilisateur</Form.Label>
+          <Form.Control
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Mot de passe</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Button type="submit">Se connecter</Button>
+      </Form>
+    </Fragment>
+  );
 }
 
 export default Login;
