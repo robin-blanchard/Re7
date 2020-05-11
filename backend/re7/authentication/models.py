@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
 
 
 def deleted_user():
-    return CustomUser.objects.get(username="deleted_user").pk
+    return CustomUser.objects.get(username="deleted_user").username

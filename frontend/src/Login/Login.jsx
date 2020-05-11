@@ -27,6 +27,7 @@ function Login(props) {
       .then((response) => {
         localStorage.setItem("access_token", response.data.access);
         localStorage.setItem("refresh_token", response.data.refresh);
+        localStorage.setItem("username", username);
         props.handleLogin();
         history.push("/recipes");
       })

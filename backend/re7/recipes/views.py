@@ -24,6 +24,7 @@ class RecipesListView(generics.ListCreateAPIView):
 
         if isinstance(data["instructions"], str):
             data["instructions"] = json.loads(data["instructions"])
+
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.save()

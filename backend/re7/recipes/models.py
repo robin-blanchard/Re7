@@ -18,7 +18,7 @@ class Recipe(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True, editable=False)
     update_date = models.DateTimeField(auto_now=True, editable=False)
     creater = models.ForeignKey(
-        CustomUser, on_delete=models.SET_DEFAULT, default=deleted_user, related_name="recipes")
+        CustomUser, on_delete=models.SET_DEFAULT, default=deleted_user, related_name="recipes", to_field="username")
 
     name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=1, choices=DIFFICULTY_LEVELS)

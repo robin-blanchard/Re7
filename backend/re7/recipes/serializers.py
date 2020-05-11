@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from re7.recipes.models import Recipe, Product, Ingredient, Instruction
+from re7.authentication.models import CustomUser
 from re7.authentication.serializers import CustomUserSerializer
 
 
@@ -26,7 +27,6 @@ class InstructionSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True, read_only=False)
     instructions = InstructionSerializer(many=True, read_only=False)
-    creater = CustomUserSerializer(read_only=True)
 
     class Meta:
         fields = "__all__"
@@ -35,8 +35,13 @@ class RecipeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         ingredients_set_data = validated_data.pop("ingredients")
         instructions_set_data = validated_data.pop("instructions")
+        creater = validated_data.pop("creater", None)
 
-        recipe = Recipe.objects.create(**validated_data)
+        if creater is not None:
+            recipe = Recipe.objects.create(**validated_data, creater=creater)
+        else:
+            recipe = Recipe.objects.create(**validated_data)
+
         for ingredient_data in ingredients_set_data:
             product_data = ingredient_data.pop("product")
             product, _ = Product.objects.get_or_create(**product_data)
