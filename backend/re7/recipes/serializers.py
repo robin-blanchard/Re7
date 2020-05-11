@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from re7.recipes.models import Recipe, Product, Ingredient, Instruction
+from re7.authentication.serializers import CustomUserSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -25,6 +26,7 @@ class InstructionSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True, read_only=False)
     instructions = InstructionSerializer(many=True, read_only=False)
+    creater = CustomUserSerializer(read_only=True)
 
     class Meta:
         fields = "__all__"
