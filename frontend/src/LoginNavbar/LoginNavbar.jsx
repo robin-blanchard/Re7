@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -20,12 +20,20 @@ function LoginNavbar(props) {
         </Nav>
         <Nav className="ml-auto">
           {props.logged ? (
-            <Navbar.Text>
-              <div onClick={props.handleSignOut} style={{ cursor: "pointer" }}>
-                {" "}
-                Se déconnecter <FaSignOutAlt />
-              </div>
-            </Navbar.Text>
+            <Fragment>
+              <Nav.Link href={`/profile/${localStorage.getItem("username")}`}>
+                {localStorage.getItem("username")}
+              </Nav.Link>
+              <Navbar.Text>
+                <div
+                  onClick={props.handleSignOut}
+                  style={{ cursor: "pointer" }}
+                >
+                  {" "}
+                  Se déconnecter <FaSignOutAlt />
+                </div>
+              </Navbar.Text>
+            </Fragment>
           ) : (
             <Nav.Link href="/login">
               Se connecter <FaSignInAlt />

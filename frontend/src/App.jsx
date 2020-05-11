@@ -8,6 +8,7 @@ import RecipeGrid from "./RecipeGrid/RecipeGrid";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
 import AddRecipe from "./AddRecipe/AddRecipe";
 import Login from "./Login/Login";
+import Profile from "./Profile/Profile";
 
 import "./App.css";
 
@@ -48,6 +49,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login handleLogin={handleLogin} />
+            </Route>
+            <Route path="/profile/:username">
+              <Profile />
             </Route>
           </Switch>
         </BrowserRouter>
