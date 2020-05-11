@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
-import CardColumns from "react-bootstrap/CardColumns";
-
-import RecipeCard from "./RecipeCard/RecipeCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import RecipeCard from "./RecipeCard/RecipeCard";
 
 function RecipeGrid() {
   const [recipesItems, setRecipesItems] = useState([]);
