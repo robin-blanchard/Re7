@@ -40,3 +40,11 @@ class RecipeDetailView(generics.RetrieveAPIView):
 class ProductsListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class UserRecipesView(generics.ListAPIView):
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        username = self.kwargs["username"]
+        return Recipe.objects.filter(creater__username=username)
