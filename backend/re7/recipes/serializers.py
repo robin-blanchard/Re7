@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from re7.recipes.models import Recipe, Product, Ingredient, Instruction
-from re7.authentication.models import CustomUser
-from re7.authentication.serializers import CustomUserSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
