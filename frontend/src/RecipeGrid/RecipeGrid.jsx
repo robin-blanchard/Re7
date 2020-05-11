@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
@@ -8,31 +7,8 @@ import Col from "react-bootstrap/Col";
 
 import RecipeCard from "./RecipeCard/RecipeCard";
 
-function RecipeGrid() {
-  const [recipesItems, setRecipesItems] = useState([]);
-
-  useEffect(() => {
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
-
-    const url = process.env.REACT_APP_BACKEND_URL + "api/recipes";
-
-    const loadData = () => {
-      Axios.get(url, { cancelToken: source.token })
-        .then((response) => {
-          setRecipesItems(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    loadData();
-    return () => {
-      source.cancel();
-    };
-  }, []);
-
+function RecipeGrid(props) {
+  const recipesItems = props.items;
   const rows = [];
 
   for (var i = 0; i < Math.ceil(recipesItems.length / 3); i++) {

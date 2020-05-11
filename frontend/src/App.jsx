@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 
 import LoginNavbar from "./LoginNavbar/LoginNavbar";
-import RecipeGrid from "./RecipeGrid/RecipeGrid";
+import MainRecipesPage from "./MainRecipesPage/MainRecipesPage";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
 import AddRecipe from "./AddRecipe/AddRecipe";
 import Login from "./Login/Login";
@@ -45,7 +45,7 @@ function App() {
               <RecipeDetail />
             </Route>
             <Route path="/recipes/">
-              <RecipeGrid />
+              <MainRecipesPage />
             </Route>
             <Route path="/login">
               <Login handleLogin={handleLogin} />
