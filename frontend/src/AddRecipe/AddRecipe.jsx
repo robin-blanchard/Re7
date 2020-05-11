@@ -77,6 +77,7 @@ function AddRecipe() {
     formData.append("prep_time", prepTime);
     formData.append("bake_time", bakeTime);
     formData.append("total_time", totalTime);
+    formData.append("creater", localStorage.getItem("username"));
 
     formData.append("ingredients", JSON.stringify(ingredients));
     formData.append("instructions", JSON.stringify(orderedInstructions));
