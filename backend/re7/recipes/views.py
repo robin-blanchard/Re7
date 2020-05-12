@@ -25,8 +25,10 @@ class RecipesListView(generics.ListCreateAPIView):
         if isinstance(data["instructions"], str):
             data["instructions"] = json.loads(data["instructions"])
 
-        if isinstance(data["photo"], str):
+        if "photo" in data and isinstance(data["photo"], str):
             photo_url = data.pop("photo")
+        else:
+            photo_url = None
 
         serializer = self.serializer_class(data=data)
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
+import axiosInstance from "../axiosApi";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -28,10 +29,9 @@ function RecipeDetail(props) {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
 
-    const url = process.env.REACT_APP_BACKEND_URL + "api/recipes/" + id;
-
     const loadData = () => {
-      Axios.get(url, { cancelToken: source.token })
+      axiosInstance
+        .get("api/recipes/" + id, { cancelToken: source.token })
         .then((response) => {
           setRecipeDetails(response.data);
         })

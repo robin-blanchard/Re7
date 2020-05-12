@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Axios from "axios";
+import axiosInstance from "../axiosApi";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -86,12 +86,12 @@ function AddRecipe() {
       formData.set("photo", recipePhoto);
     }
 
-    Axios.post(process.env.REACT_APP_BACKEND_URL + "api/recipes", formData, {
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: "JWT " + localStorage.getItem("access_token"),
-      },
-    })
+    axiosInstance
+      .post("api/recipes", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
       .then(function (response) {
         setShowAlert(true);
         setAlertType("success");

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import axiosInstance from "../axiosApi";
 
 import RecipeGrid from "../RecipeGrid/RecipeGrid";
 
@@ -10,10 +11,9 @@ function MainRecipesPage() {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
 
-    const url = process.env.REACT_APP_BACKEND_URL + "api/recipes";
-
     const loadData = () => {
-      Axios.get(url, { cancelToken: source.token })
+      axiosInstance
+        .get("api/recipes", { cancelToken: source.token })
         .then((response) => {
           setRecipesItems(response.data);
         })

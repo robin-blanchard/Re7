@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import Axios from "axios";
+import axiosInstance from "../axiosApi";
 import { useHistory } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
@@ -20,10 +20,8 @@ function Login(props) {
     formData.append("username", username);
     formData.append("password", password);
 
-    Axios.post(
-      process.env.REACT_APP_BACKEND_URL + "auth/token/obtain/",
-      formData
-    )
+    axiosInstance
+      .post("auth/token/obtain/", formData)
       .then((response) => {
         localStorage.setItem("access_token", response.data.access);
         localStorage.setItem("refresh_token", response.data.refresh);
