@@ -34,11 +34,16 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredients_set_data = validated_data.pop("ingredients")
         instructions_set_data = validated_data.pop("instructions")
         creater = validated_data.pop("creater", None)
+        photo_url = validated_data.pop("photo_url", None)
 
         if creater is not None:
             recipe = Recipe.objects.create(**validated_data, creater=creater)
         else:
             recipe = Recipe.objects.create(**validated_data)
+
+        if photo_url is not None:
+            recipe.photo = photo_url
+            recipe.save()
 
         for ingredient_data in ingredients_set_data:
             product_data = ingredient_data.pop("product")

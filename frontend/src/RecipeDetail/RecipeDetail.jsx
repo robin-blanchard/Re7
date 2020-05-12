@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
@@ -16,6 +17,8 @@ function RecipeDetail(props) {
   const { id } = useParams();
   const [RecipeDetails, setRecipeDetails] = useState({});
   const [showModal, setShowModal] = useState(false);
+
+  const current_user = localStorage.getItem("username");
 
   useEffect(() => {
     const CancelToken = Axios.CancelToken;
@@ -38,6 +41,35 @@ function RecipeDetail(props) {
     };
   }, []);
 
+  const handleFork = () => {
+    const newUserRecipeDetails = JSON.parse(JSON.stringify(RecipeDetails));
+    newUserRecipeDetails["creater"] = localStorage.getItem("username");
+
+    const photoUrlRegex = /https:\/\/storage\.googleapis\.com\/?[\w-]+\/((photos\/)?([\w-_]+\.(jpg|png)))\?/g;
+    const photoUrl = photoUrlRegex.exec(newUserRecipeDetails["photo"])[1];
+    newUserRecipeDetails["photo"] = photoUrl;
+
+    delete newUserRecipeDetails["id"];
+    delete newUserRecipeDetails["creation_date"];
+    delete newUserRecipeDetails["update_date"];
+
+    Axios.post(
+      process.env.REACT_APP_BACKEND_URL + "api/recipes",
+      newUserRecipeDetails,
+      {
+        headers: {
+          Authorization: "JWT " + localStorage.getItem("access_token"),
+        },
+      }
+    )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  };
+
   return (
     <Container>
       <ImageModal
@@ -59,6 +91,11 @@ function RecipeDetail(props) {
           <h1>
             {RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}
           </h1>
+          <h3>
+            {RecipeDetails.creater
+              ? RecipeDetails.creater
+              : "Créateur de la recette"}
+          </h3>
           <Row>
             <Col md={4}>
               <Row>
@@ -101,6 +138,11 @@ function RecipeDetail(props) {
               </Row>
             </Col>
           </Row>
+          {RecipeDetails.creater === current_user ? (
+            <Button>Modifier la recette</Button>
+          ) : (
+            <Button onClick={handleFork}>Fork</Button>
+          )}
           <Row>
             <Col md={4}>
               {RecipeDetails.ingredients

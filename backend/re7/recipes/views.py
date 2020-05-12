@@ -25,9 +25,13 @@ class RecipesListView(generics.ListCreateAPIView):
         if isinstance(data["instructions"], str):
             data["instructions"] = json.loads(data["instructions"])
 
+        if isinstance(data["photo"], str):
+            photo_url = data.pop("photo")
+
         serializer = self.serializer_class(data=data)
+
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(photo_url=photo_url)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
