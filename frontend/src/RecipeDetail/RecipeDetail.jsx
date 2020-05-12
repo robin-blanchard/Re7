@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
+import SubmissionAlert from "../AddRecipe/SubmissionAlert";
 
 import "../image-center-crop.css";
 
@@ -17,6 +18,9 @@ function RecipeDetail(props) {
   const { id } = useParams();
   const [RecipeDetails, setRecipeDetails] = useState({});
   const [showModal, setShowModal] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState("");
 
   const current_user = localStorage.getItem("username");
 
@@ -42,6 +46,7 @@ function RecipeDetail(props) {
   }, []);
 
   const handleFork = () => {
+    setShowAlert(false);
     const newUserRecipeDetails = JSON.parse(JSON.stringify(RecipeDetails));
     newUserRecipeDetails["creater"] = localStorage.getItem("username");
 
@@ -64,14 +69,23 @@ function RecipeDetail(props) {
     )
       .then(function (response) {
         console.log(response);
+        setShowAlert(true);
+        setAlertType("success");
       })
       .catch(function (response) {
+        setShowAlert(true);
+        setAlertType("failure");
         console.log(response);
       });
   };
 
   return (
     <Container>
+      <SubmissionAlert
+        type={alertType}
+        show={showAlert}
+        unshowAlert={() => setShowAlert(false)}
+      />
       <ImageModal
         show={showModal}
         title={RecipeDetails.name}
