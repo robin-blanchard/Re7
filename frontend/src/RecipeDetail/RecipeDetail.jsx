@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Axios from "axios";
 import axiosInstance from "../axiosApi";
 
@@ -153,7 +153,16 @@ function RecipeDetail(props) {
             </Col>
           </Row>
           {RecipeDetails.creater === current_user ? (
-            <Button>Modifier la recette</Button>
+            <Link
+              to={{
+                pathname: `/recipes/mod_recipe/${id}`,
+                state: {
+                  recipeDetails: RecipeDetails,
+                },
+              }}
+            >
+              <Button>Modifier la recette</Button>
+            </Link>
           ) : (
             <Button onClick={handleFork}>Fork</Button>
           )}

@@ -4,9 +4,7 @@ const useElementsState = (initialValue) => {
   const [elements, setElements] = useState([initialValue]);
 
   const addElement = (elementToAdd = initialValue) => {
-    console.log(initialValue);
     const elementClone = JSON.parse(JSON.stringify(elementToAdd));
-    console.log(elementClone);
     setElements([...elements, elementClone]);
   };
   const deleteElement = (indexToRemove) => {

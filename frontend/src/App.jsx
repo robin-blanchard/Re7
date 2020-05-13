@@ -38,6 +38,9 @@ function App() {
       <Col md={9} className="mx-auto">
         <BrowserRouter>
           <Switch>
+            <Route path="/recipes/mod_recipe/:id">
+              <AddRecipe />
+            </Route>
             <Route exact path="/recipes/add_recipe">
               <AddRecipe />
             </Route>
