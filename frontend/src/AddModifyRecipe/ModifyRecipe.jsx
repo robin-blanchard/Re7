@@ -1,27 +1,17 @@
 import React, { useState, Fragment } from "react";
+import { useLocation, useParams } from "react-router-dom";
+
 import axiosInstance from "../axiosApi";
 
 import SubmissionAlert from "./SubmissionAlert";
 import RecipeForm from "./RecipeForm";
 
-function AddRecipe() {
-  const initialState = {
-    recipeName: "",
-    difficulty: "1",
-    prepTime: 0,
-    bakeTime: 0,
-    totalTime: 0,
-    recipePhoto: null,
-    ingredients: {
-      quantity: 0,
-      unit: "kg",
-      product: { id: "", name: "" },
-    },
-    instructions: {
-      order: 0,
-      text: "",
-    },
-  };
+import { extractPhotoName } from "../utils";
+
+function ModifyRecipe() {
+  const { id } = useParams();
+  const data = useLocation();
+  const initialState = data.state.recipeDetails;
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
@@ -36,11 +26,11 @@ function AddRecipe() {
     );
 
     const formData = new FormData();
-    formData.append("name", recipeFormData["recipeName"]);
+    formData.append("name", recipeFormData["name"]);
     formData.append("difficulty", recipeFormData["difficulty"]);
-    formData.append("prep_time", recipeFormData["prepTime"]);
-    formData.append("bake_time", recipeFormData["bakeTime"]);
-    formData.append("total_time", recipeFormData["totalTime"]);
+    formData.append("prep_time", recipeFormData["prep_time"]);
+    formData.append("bake_time", recipeFormData["bake_time"]);
+    formData.append("total_time", recipeFormData["total_time"]);
     formData.append("creater", localStorage.getItem("username"));
 
     formData.append(
@@ -49,12 +39,19 @@ function AddRecipe() {
     );
     formData.append("instructions", JSON.stringify(orderedInstructions));
 
-    if (!!recipeFormData["recipePhoto"]) {
-      formData.set("photo", recipeFormData["recipePhoto"]);
+    if (!!recipeFormData["photo"]) {
+      if (
+        typeof recipeFormData["photo"] === "string" ||
+        recipeFormData["photo"] instanceof String
+      ) {
+        formData.set("photo", extractPhotoName(recipeFormData["photo"]));
+      } else {
+        formData.set("photo", recipeFormData["photo"]);
+      }
     }
-
+    console.log(formData);
     axiosInstance
-      .post("api/recipes", formData, {
+      .patch("api/recipes/" + id, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -81,11 +78,11 @@ function AddRecipe() {
       />
       <RecipeForm
         initialState={initialState}
-        submitName={"Ajouter"}
+        submitName={"Modifier"}
         setRecipeFormData={setRecipeFormData}
         handleSubmit={handleSubmit}
       />
     </Fragment>
   );
 }
-export default AddRecipe;
+export default ModifyRecipe;

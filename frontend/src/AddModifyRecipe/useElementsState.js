@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-const useElementsState = (initialValue) => {
-  const [elements, setElements] = useState([initialValue]);
+const useElementsState = (initialElements) => {
+  const initialValue = initialElements[0];
+  const [elements, setElements] = useState(initialElements);
 
   const addElement = (elementToAdd = initialValue) => {
     const elementClone = JSON.parse(JSON.stringify(elementToAdd));

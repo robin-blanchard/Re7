@@ -6,19 +6,17 @@ import Button from "react-bootstrap/Button";
 
 import useElementsState from "./useElementsState";
 
+import { extractPhotoName } from "../utils";
+
 const RecipeForm = (props) => {
-  const [recipeName, setRecipeName] = useState(
-    props.initialState["recipeName"]
-  );
+  const [recipeName, setRecipeName] = useState(props.initialState["name"]);
   const [difficulty, setDifficulty] = useState(
     props.initialState["difficulty"]
   );
-  const [prepTime, setPrepTime] = useState(props.initialState["prepTime"]);
-  const [bakeTime, setBakeTime] = useState(props.initialState["bakeTime"]);
-  const [totalTime, setTotalTime] = useState(props.initialState["totalTime"]);
-  const [recipePhoto, setRecipePhoto] = useState(
-    props.initialState["recipePhoto"]
-  );
+  const [prepTime, setPrepTime] = useState(props.initialState["prep_time"]);
+  const [bakeTime, setBakeTime] = useState(props.initialState["bake_time"]);
+  const [totalTime, setTotalTime] = useState(props.initialState["total_time"]);
+  const [photo, setPhoto] = useState(props.initialState["photo"]);
 
   const [
     ingredients,
@@ -62,12 +60,12 @@ const RecipeForm = (props) => {
 
   useEffect(() => {
     const recipeFormData = {
-      recipeName: recipeName,
+      name: recipeName,
       difficulty: difficulty,
-      prepTime: prepTime,
-      bakeTime: bakeTime,
-      totalTime: totalTime,
-      recipePhoto: recipePhoto,
+      prep_time: prepTime,
+      bake_time: bakeTime,
+      total_time: totalTime,
+      photo: photo,
       ingredients: ingredients,
       instructions: instructions,
     };
@@ -78,7 +76,7 @@ const RecipeForm = (props) => {
     prepTime,
     bakeTime,
     totalTime,
-    recipePhoto,
+    photo,
     ingredients,
     instructions,
     setRecipeFormData,
@@ -107,10 +105,16 @@ const RecipeForm = (props) => {
           <Form.Label>Photo</Form.Label>
           <Form.File
             id="custom-file"
-            label={recipePhoto ? recipePhoto.name : "Photo"}
+            label={
+              photo
+                ? photo.name
+                  ? photo.name
+                  : extractPhotoName(photo)
+                : "Photo"
+            }
             custom
             onChange={(e) => {
-              setRecipePhoto(e.target.files[0]);
+              setPhoto(e.target.files[0]);
             }}
           />
         </Form.Group>

@@ -6,7 +6,8 @@ import Col from "react-bootstrap/Col";
 import LoginNavbar from "./LoginNavbar/LoginNavbar";
 import MainRecipesPage from "./MainRecipesPage/MainRecipesPage";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
-import AddRecipe from "./AddRecipe/AddRecipe";
+import AddRecipe from "./AddModifyRecipe/AddRecipe";
+import ModifyRecipe from "./AddModifyRecipe/ModifyRecipe";
 import Login from "./Login/Login";
 import UserPage from "./UserPage/UserPage";
 
@@ -39,7 +40,7 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route path="/recipes/mod_recipe/:id">
-              <AddRecipe />
+              <ModifyRecipe />
             </Route>
             <Route exact path="/recipes/add_recipe">
               <AddRecipe />
