@@ -15,7 +15,7 @@ function RecipeGrid(props) {
     const cols = [];
     const limit =
       i + 1 === Math.ceil(recipesItems.length / 3) &&
-      recipesItems.length % 3 != 0
+      recipesItems.length % 3 !== 0
         ? recipesItems.length % 3
         : 3;
     for (var j = 0; j < limit; j++) {
