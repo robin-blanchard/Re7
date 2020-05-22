@@ -68,6 +68,7 @@ heroku addons:create heroku-postgresql:hobby-dev
 heroku config set SECRET_KEY=secrety_key
 heroku config:set ALLOWED_HOSTS='.herokuapp.com'
 heroku config:set CORS_ORIGIN_WHITELIST='https://frontend_app_name.herokuapp.com'
+heroku config:set GOOGLE_APPLICATION_CREDENTIALS=google_credentials_file.json
 heroku config:set DEBUG=False
 heroku container:push web
 heroku container:release web
