@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import axiosInstance from "../axiosApi";
+import { axiosInstanceNoAuth } from "../axiosApi";
 
 import RecipeGrid from "../RecipeGrid/RecipeGrid";
 
@@ -12,7 +12,7 @@ function MainRecipesPage() {
     const source = CancelToken.source();
 
     const loadData = () => {
-      axiosInstance
+      axiosInstanceNoAuth
         .get("api/recipes", { cancelToken: source.token })
         .then((response) => {
           setRecipesItems(response.data);

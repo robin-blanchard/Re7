@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import axiosInstance from "../axiosApi";
+import { axiosInstanceAuth } from "../axiosApi";
 
 import SubmissionAlert from "./SubmissionAlert";
 import RecipeForm from "./RecipeForm";
@@ -57,7 +57,7 @@ function AddRecipe() {
       formData.set("photo", recipeFormData["photo"]);
     }
 
-    axiosInstance
+    axiosInstanceAuth
       .post("api/recipes", formData, {
         headers: {
           "content-type": "multipart/form-data",

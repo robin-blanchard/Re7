@@ -9,6 +9,7 @@ import RecipeDetail from "./RecipeDetail/RecipeDetail";
 import AddRecipe from "./AddModifyRecipe/AddRecipe";
 import ModifyRecipe from "./AddModifyRecipe/ModifyRecipe";
 import Login from "./Login/Login";
+import RegisterPage from "./RegisterPage/RegisterPage";
 import UserPage from "./UserPage/UserPage";
 
 import "./App.css";
@@ -53,6 +54,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login handleLogin={handleLogin} />
+            </Route>
+            <Route path="/register">
+              <RegisterPage handleLogin={handleLogin} />
             </Route>
             <Route path="/profile/:username">
               <UserPage />

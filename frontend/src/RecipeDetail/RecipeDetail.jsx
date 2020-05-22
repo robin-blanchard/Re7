@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Axios from "axios";
-import axiosInstance from "../axiosApi";
+import { axiosInstanceNoAuth } from "../axiosApi";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
-import SubmissionAlert from "../AddRecipe/SubmissionAlert";
+import SubmissionAlert from "../AddModifyRecipe/SubmissionAlert";
 
 import "../image-center-crop.css";
 
@@ -30,7 +30,7 @@ function RecipeDetail(props) {
     const source = CancelToken.source();
 
     const loadData = () => {
-      axiosInstance
+      axiosInstanceNoAuth
         .get("api/recipes/" + id, { cancelToken: source.token })
         .then((response) => {
           setRecipeDetails(response.data);
@@ -58,15 +58,11 @@ function RecipeDetail(props) {
     delete newUserRecipeDetails["creation_date"];
     delete newUserRecipeDetails["update_date"];
 
-    Axios.post(
-      process.env.REACT_APP_BACKEND_URL + "api/recipes",
-      newUserRecipeDetails,
-      {
-        headers: {
-          Authorization: "JWT " + localStorage.getItem("access_token"),
-        },
-      }
-    )
+    axiosInstanceNoAuth
+      .post(
+        process.env.REACT_APP_BACKEND_URL + "api/recipes",
+        newUserRecipeDetails
+      )
       .then(function (response) {
         console.log(response);
         setShowAlert(true);

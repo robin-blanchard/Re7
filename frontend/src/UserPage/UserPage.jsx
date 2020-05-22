@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { axiosInstanceNoAuth } from "../axiosApi";
 import Axios from "axios";
 
 import RecipeGrid from "../RecipeGrid/RecipeGrid";
@@ -12,10 +13,9 @@ const UserPage = (props) => {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
 
-    const url = process.env.REACT_APP_BACKEND_URL + "api/user/" + username;
-
     const loadData = () => {
-      Axios.get(url, { cancelToken: source.token })
+      axiosInstanceNoAuth
+        .get("api/user/" + username, { cancelToken: source.token })
         .then((response) => {
           setRecipesItems(response.data);
         })

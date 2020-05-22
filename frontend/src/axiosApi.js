@@ -1,6 +1,15 @@
 import Axios from "axios";
 
-const axiosInstance = Axios.create({
+const axiosInstanceNoAuth = Axios.create({
+  baseURL: process.env.REACT_APP_BACKEND_URL,
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+    accept: "application/json",
+  },
+});
+
+const axiosInstanceAuth = Axios.create({
   baseURL: process.env.REACT_APP_BACKEND_URL,
   timeout: 5000,
   headers: {
@@ -9,7 +18,8 @@ const axiosInstance = Axios.create({
     accept: "application/json",
   },
 });
-axiosInstance.interceptors.response.use(
+
+axiosInstanceAuth.interceptors.response.use(
   (response) => response,
   (error) => {
     const originalRequest = error.config;
@@ -21,18 +31,18 @@ axiosInstance.interceptors.response.use(
       const refresh_token = localStorage.getItem("refresh_token");
       console.log("Trying to refresh token...");
 
-      return axiosInstance
+      return axiosInstanceAuth
         .post("auth/token/refresh/", { refresh: refresh_token })
         .then((response) => {
           localStorage.setItem("access_token", response.data.access);
           localStorage.setItem("refresh_token", response.data.refresh);
 
-          axiosInstance.defaults.headers["Authorization"] =
+          axiosInstanceAuth.defaults.headers["Authorization"] =
             "JWT " + response.data.access;
           originalRequest.headers["Authorization"] =
             "JWT " + response.data.access;
 
-          return axiosInstance(originalRequest);
+          return axiosInstanceAuth(originalRequest);
         })
         .catch((err) => {
           console.log(err);
@@ -42,4 +52,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export { axiosInstanceNoAuth, axiosInstanceAuth };

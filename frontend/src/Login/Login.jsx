@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
-import axiosInstance from "../axiosApi";
-import { useHistory } from "react-router-dom";
+import { axiosInstanceNoAuth } from "../axiosApi";
+import { useHistory, Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -20,7 +20,7 @@ function Login(props) {
     formData.append("username", username);
     formData.append("password", password);
 
-    axiosInstance
+    axiosInstanceNoAuth
       .post("auth/token/obtain/", formData)
       .then((response) => {
         localStorage.setItem("access_token", response.data.access);
@@ -62,6 +62,9 @@ function Login(props) {
         </Form.Group>
         <Button type="submit">Se connecter</Button>
       </Form>
+      <Link to="/register">
+        <Button>Créer un compte</Button>
+      </Link>
     </Fragment>
   );
 }

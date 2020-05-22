@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import axiosInstance from "../axiosApi";
+import { axiosInstanceAuth } from "../axiosApi";
 
 import SubmissionAlert from "./SubmissionAlert";
 import RecipeForm from "./RecipeForm";
@@ -50,7 +50,7 @@ function ModifyRecipe() {
       }
     }
     console.log(formData);
-    axiosInstance
+    axiosInstanceAuth
       .patch("api/recipes/" + id, formData, {
         headers: {
           "content-type": "multipart/form-data",
