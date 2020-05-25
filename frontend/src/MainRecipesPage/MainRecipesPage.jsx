@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Axios from "axios";
 import { axiosInstanceNoAuth } from "../axiosApi";
 
@@ -28,7 +28,12 @@ function MainRecipesPage() {
     };
   }, []);
 
-  return <RecipeGrid items={recipesItems} />;
+  return (
+    <Fragment>
+      <h1 className="text-center">Voici les dernières recettes !</h1>
+      <RecipeGrid items={recipesItems} />
+    </Fragment>
+  );
 }
 
 export default MainRecipesPage;
