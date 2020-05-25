@@ -21,6 +21,7 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username");
     setLogged(false);
   };
 

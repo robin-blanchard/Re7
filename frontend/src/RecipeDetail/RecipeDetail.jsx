@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useParams, Link } from "react-router-dom";
 import Axios from "axios";
 import { axiosInstanceNoAuth } from "../axiosApi";
@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
@@ -98,16 +99,40 @@ function RecipeDetail(props) {
             />
           </div>
 
-          <h1>
-            {RecipeDetails.name ? RecipeDetails.name : "Nom de la recette"}
-          </h1>
-          <h3>
-            {RecipeDetails.creater
-              ? RecipeDetails.creater
-              : "Créateur de la recette"}
-          </h3>
+          <h1>{RecipeDetails.name}</h1>
           <Row>
-            <Col md={4}>
+            <Col>
+              <h3>{RecipeDetails.creater}</h3>
+            </Col>
+            <Col>
+              {RecipeDetails.creater === current_user ? (
+                <Link
+                  to={{
+                    pathname: `/recipes/mod_recipe/${id}`,
+                    state: {
+                      recipeDetails: RecipeDetails,
+                    },
+                  }}
+                >
+                  <Button variant="secondary">Modifier la recette</Button>
+                </Link>
+              ) : (
+                <Button variant="secondary" onClick={handleFork}>
+                  Fork
+                </Button>
+              )}
+            </Col>
+            {RecipeDetails.creater === current_user ? (
+              <Col>
+                <Button variant="secondary">Supprimer la recette</Button>
+              </Col>
+            ) : (
+              <Fragment />
+            )}
+          </Row>
+
+          <Row>
+            <Col md={4} className="border">
               <Row>
                 <p className="mx-auto">Difficulté</p>
               </Row>
@@ -123,65 +148,53 @@ function RecipeDetail(props) {
                 </p>
               </Row>
             </Col>
-            <Col md={4}>
+            <Col md={4} className="border">
               <Row>
                 <p className="mx-auto">Temps de préparation</p>
               </Row>
               <Row>
-                <p className="mx-auto">
-                  {RecipeDetails.prep_time
-                    ? RecipeDetails.prep_time
-                    : "Temps de préparation"}
-                </p>
+                <p className="mx-auto">{RecipeDetails.prep_time}</p>
               </Row>
             </Col>
-            <Col md={4}>
+            <Col md={4} className="border">
               <Row>
                 <p className="mx-auto">Temps de cuisson</p>
               </Row>
               <Row>
-                <p className="mx-auto">
-                  {RecipeDetails.bake_time
-                    ? RecipeDetails.bake_time
-                    : "Temps de cuisson"}
-                </p>
+                <p className="mx-auto">{RecipeDetails.bake_time}</p>
               </Row>
             </Col>
           </Row>
-          {RecipeDetails.creater === current_user ? (
-            <Link
-              to={{
-                pathname: `/recipes/mod_recipe/${id}`,
-                state: {
-                  recipeDetails: RecipeDetails,
-                },
-              }}
-            >
-              <Button>Modifier la recette</Button>
-            </Link>
-          ) : (
-            <Button onClick={handleFork}>Fork</Button>
-          )}
+
           <Row>
             <Col md={4}>
-              {RecipeDetails.ingredients
-                ? RecipeDetails.ingredients.map((ingredient, idx) => (
-                    <li key={idx}>
+              Ingrédients
+              <ListGroup>
+                {RecipeDetails.ingredients ? (
+                  RecipeDetails.ingredients.map((ingredient, idx) => (
+                    <ListGroup.Item key={idx}>
                       {ingredient.product.name} : {ingredient.quantity}{" "}
                       {ingredient.unit}
-                    </li>
+                    </ListGroup.Item>
                   ))
-                : "Ingredients"}
+                ) : (
+                  <></>
+                )}
+              </ListGroup>
             </Col>
-            <Col md="auto">
+            <Col md={8}>
               Instructions
-              {RecipeDetails.instructions
-                ? RecipeDetails.instructions
-                    .sort((a, b) => (a.order < b.order ? -1 : 1))
-                    .map((instruction, idx) => (
-                      <li key={idx}>{instruction.text}</li>
-                    ))
-                : "Ingredients"}
+              <ListGroup>
+                {RecipeDetails.instructions
+                  ? RecipeDetails.instructions
+                      .sort((a, b) => (a.order < b.order ? -1 : 1))
+                      .map((instruction, idx) => (
+                        <ListGroup.Item key={idx}>
+                          {instruction.text}
+                        </ListGroup.Item>
+                      ))
+                  : "Ingredients"}
+              </ListGroup>
             </Col>
           </Row>
         </Col>
