@@ -85,7 +85,7 @@ function AddRecipe() {
       />
       <RecipeForm
         initialState={initialState}
-        submitName={"Ajouter"}
+        submitName={"Ajouter la recette"}
         setRecipeFormData={setRecipeFormData}
         handleSubmit={handleSubmit}
       />
