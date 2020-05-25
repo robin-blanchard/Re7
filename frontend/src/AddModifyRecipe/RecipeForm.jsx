@@ -4,9 +4,13 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
+import { FaPlus, FaTimes } from "react-icons/fa";
+
 import useElementsState from "./useElementsState";
 
 import { extractPhotoName } from "../utils";
+
+import "./RecipeForm.css";
 
 const RecipeForm = (props) => {
   const [recipeName, setRecipeName] = useState(props.initialState["name"]);
@@ -159,8 +163,16 @@ const RecipeForm = (props) => {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Label>Ingrédients</Form.Label>
-          <Button onClick={() => addIngredient()}>Plus</Button>
+          <Col>
+            <Form.Label>Ingrédients</Form.Label>
+            <Button
+              className="plus-btn"
+              onClick={() => addIngredient()}
+              variant="outline-dark"
+            >
+              <FaPlus />
+            </Button>
+          </Col>
         </Form.Row>
 
         {ingredients.map((ingredientItem, idx) => (
@@ -201,28 +213,35 @@ const RecipeForm = (props) => {
               />
             </Form.Group>
 
-            <Button
-              onClick={(e) => {
-                deleteIngredient(idx);
-              }}
-            >
-              Delete
-            </Button>
+            <Form.Group as={Col}>
+              <Button
+                onClick={(e) => {
+                  deleteIngredient(idx);
+                }}
+                variant="outline-dark"
+              >
+                <FaTimes />
+              </Button>
+            </Form.Group>
           </Form.Row>
         ))}
 
         <Form.Row>
-          <Form.Label>Instructions</Form.Label>
-          <Button
-            onClick={() =>
-              addInstruction({
-                order: instructions.length,
-                text: "",
-              })
-            }
-          >
-            Plus
-          </Button>
+          <Col>
+            <Form.Label>Instructions</Form.Label>
+            <Button
+              onClick={() =>
+                addInstruction({
+                  order: instructions.length,
+                  text: "",
+                })
+              }
+              className="plus-btn"
+              variant="outline-dark"
+            >
+              <FaPlus />
+            </Button>
+          </Col>
         </Form.Row>
 
         {instructions.map((instructionItem, idx) => (
@@ -235,17 +254,23 @@ const RecipeForm = (props) => {
                 }}
               />
             </Form.Group>
-            <Button
-              onClick={(e) => {
-                deleteInstruction(idx);
-              }}
-            >
-              Delete
-            </Button>
+
+            <Form.Group as={Col}>
+              <Button
+                onClick={(e) => {
+                  deleteInstruction(idx);
+                }}
+                variant="outline-dark"
+              >
+                <FaTimes />
+              </Button>
+            </Form.Group>
           </Form.Row>
         ))}
         {}
-        <Button type="submit">{props.submitName}</Button>
+        <Button type="submit" variant="dark">
+          {props.submitName}
+        </Button>
       </Form>
     </Fragment>
   );
