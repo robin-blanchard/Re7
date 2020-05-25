@@ -12,8 +12,6 @@ import Login from "./Login/Login";
 import RegisterPage from "./RegisterPage/RegisterPage";
 import UserPage from "./UserPage/UserPage";
 
-import "./App.css";
-
 function App() {
   const [logged, setLogged] = useState(false);
 
