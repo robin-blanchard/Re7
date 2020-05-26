@@ -8,7 +8,7 @@ import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 function LoginNavbar(props) {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="/">Re7</Navbar.Brand>
+      <Navbar.Brand href="/recipes">Re7</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -16,7 +16,6 @@ function LoginNavbar(props) {
           <Nav.Link href="/recipes/add_recipe">
             Ajouter une nouvelle recette
           </Nav.Link>
-          <Nav.Link href="/products">Produits</Nav.Link>
         </Nav>
         <Nav className="ml-auto">
           {props.logged ? (
