@@ -45,7 +45,7 @@ axiosInstanceAuth.interceptors.response.use(
           return axiosInstanceAuth(originalRequest);
         })
         .catch((err) => {
-          console.log(err);
+          return Promise.reject(err);
         });
     }
     return Promise.reject(error);
