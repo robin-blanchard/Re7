@@ -43,7 +43,7 @@ function App() {
               <ModifyRecipe />
             </Route>
             <Route exact path="/recipes/add_recipe">
-              <AddRecipe />
+              <AddRecipe logged={logged} />
             </Route>
             <Route path="/recipes/:id">
               <RecipeDetail />

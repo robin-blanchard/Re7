@@ -1,10 +1,12 @@
 import React, { useState, Fragment } from "react";
-import { axiosInstanceAuth } from "../axiosApi";
 
+import UseAnimations from "react-useanimations";
+
+import { axiosInstanceAuth } from "../axiosApi";
 import SubmissionAlert from "./SubmissionAlert";
 import RecipeForm from "./RecipeForm";
 
-function AddRecipe() {
+function AddRecipe(props) {
   const initialState = {
     name: "",
     difficulty: "1",
@@ -76,7 +78,7 @@ function AddRecipe() {
         return -1;
       });
   };
-  return (
+  return props.logged ? (
     <Fragment>
       <SubmissionAlert
         show={showAlert}
@@ -90,6 +92,12 @@ function AddRecipe() {
         handleSubmit={handleSubmit}
       />
     </Fragment>
+  ) : (
+    <div className="d-flex flex-row justify-content-center">
+      <UseAnimations animationKey="alertCircle" />
+      Vous devez vous connecter pour pouvoir ajouter une recette
+      <UseAnimations animationKey="alertCircle" />
+    </div>
   );
 }
 export default AddRecipe;

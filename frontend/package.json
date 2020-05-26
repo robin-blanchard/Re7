@@ -36,6 +36,7 @@
     "bootstrap": "^4.4.1",
     "react-bootstrap": "^1.0.0",
     "react-icons": "^3.10.0",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "react-useanimations": "^1.2.13"
   }
 }
