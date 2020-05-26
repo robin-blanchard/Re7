@@ -4,14 +4,17 @@ from django.http import QueryDict
 
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.pagination import LimitOffsetPagination
+
 
 from re7.recipes.models import Recipe, Product
 from re7.recipes.serializers import RecipeSerializer, ProductSerializer
 
 
 class RecipesListView(generics.ListCreateAPIView):
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.all().order_by('-update_date')
     serializer_class = RecipeSerializer
+    pagination_class = LimitOffsetPagination
 
     def create(self, request, *args, **kwargs):
         data = request.data
