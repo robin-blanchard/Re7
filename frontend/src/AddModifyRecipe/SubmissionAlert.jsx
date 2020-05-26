@@ -7,7 +7,12 @@ function SubmissionAlert(props) {
   const successText = "Votre recette a bien été enregistrée!";
   const failText =
     "Oups, un problème est survenu, votre recette n'a pas été enregistrée.";
-  const textToDisplay = props.type === "success" ? successText : failText;
+  const textToDisplay =
+    props.type === "success"
+      ? successText
+      : props.type === "failure"
+      ? failText
+      : "";
 
   if (props.show) {
     return (
