@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import Axios from "axios";
-import { axiosInstanceNoAuth } from "../axiosApi";
+import { axiosInstanceNoAuth, axiosInstanceAuth } from "../axiosApi";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -23,6 +23,8 @@ function RecipeDetail(props) {
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
+
+  const history = useHistory();
 
   const current_user = localStorage.getItem("username");
 
@@ -59,7 +61,7 @@ function RecipeDetail(props) {
     delete newUserRecipeDetails["creation_date"];
     delete newUserRecipeDetails["update_date"];
 
-    axiosInstanceNoAuth
+    axiosInstanceAuth
       .post(
         process.env.REACT_APP_BACKEND_URL + "api/recipes",
         newUserRecipeDetails
@@ -72,6 +74,27 @@ function RecipeDetail(props) {
       .catch(function (response) {
         setShowAlert(true);
         setAlertType("failure");
+        console.log(response);
+      });
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    setShowAlert(false);
+
+    axiosInstanceAuth
+      .delete(process.env.REACT_APP_BACKEND_URL + "api/recipes/" + id)
+      .then(function (response) {
+        console.log(response);
+        setShowAlert(true);
+        setAlertType("deletion-success");
+        setTimeout(function () {
+          history.push("/recipes");
+        }, 1000);
+      })
+      .catch(function (response) {
+        setShowAlert(true);
+        setAlertType("deletion-failure");
         console.log(response);
       });
   };
@@ -124,7 +147,9 @@ function RecipeDetail(props) {
             </Col>
             {RecipeDetails.creater === current_user ? (
               <Col>
-                <Button variant="secondary">Supprimer la recette</Button>
+                <Button variant="secondary" onClick={handleDelete}>
+                  Supprimer la recette
+                </Button>
               </Col>
             ) : (
               <Fragment />
