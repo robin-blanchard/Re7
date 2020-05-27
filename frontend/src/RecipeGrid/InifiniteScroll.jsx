@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Axios from "axios";
 
@@ -10,22 +10,22 @@ const InfiniteScroll = (props) => {
     setIsFetching(true);
   };
 
-  const checkPageBottom = () => {
+  const checkPageBottom = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight
     ) {
       handlePageBottom();
     }
-  };
+  }, []);
 
   useEffect(() => {
     checkPageBottom();
     window.addEventListener("scroll", checkPageBottom);
     return () => window.removeEventListener("scroll", checkPageBottom);
-  }, [items]);
+  }, [items, checkPageBottom]);
 
-  const fetchMoreListItems = () => {
+  const fetchMoreListItems = useCallback(() => {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
     const offset = items.length;
@@ -46,13 +46,13 @@ const InfiniteScroll = (props) => {
     return () => {
       source.cancel();
     };
-  };
+  }, [items, props.axiosInstance, props.limit, props.url]);
 
   useEffect(() => {
     if (!isFetching) return;
 
     return fetchMoreListItems();
-  }, [isFetching]);
+  }, [isFetching, fetchMoreListItems]);
 
   const ComponentToScroll = props.componentToScroll;
   return <ComponentToScroll items={items} />;
