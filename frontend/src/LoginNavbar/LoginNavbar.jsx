@@ -8,6 +8,7 @@ import Popover from "react-bootstrap/Popover";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 import Login from "./Login";
+import SearchBar from "./SearchBar";
 
 function LoginNavbar(props) {
   return (
@@ -22,6 +23,7 @@ function LoginNavbar(props) {
           </Nav.Link>
         </Nav>
         <Nav className="ml-auto">
+          <SearchBar />
           {props.logged ? (
             <Fragment>
               <Nav.Link href={`/profile/${localStorage.getItem("username")}`}>
