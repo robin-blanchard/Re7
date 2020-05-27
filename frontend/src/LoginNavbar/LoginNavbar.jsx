@@ -7,7 +7,7 @@ import Popover from "react-bootstrap/Popover";
 
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
-import Login from "../Login/Login";
+import Login from "./Login";
 
 function LoginNavbar(props) {
   return (
