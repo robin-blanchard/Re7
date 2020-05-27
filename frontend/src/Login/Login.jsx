@@ -59,11 +59,19 @@ function Login(props) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button type="submit">Se connecter</Button>
+        <Form.Group className="text-center">
+          <Button type="submit" variant="outline-info">
+            Se connecter
+          </Button>
+        </Form.Group>
       </Form>
-      <Link to="/register">
-        <Button>Créer un compte</Button>
-      </Link>
+      <hr />
+      <div className="text-center">
+        Pas encore de compte?
+        <Link to="/register">
+          <Button variant="outline-info">Créer un compte</Button>
+        </Link>
+      </div>
     </Fragment>
   );
 }
