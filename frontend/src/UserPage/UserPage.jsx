@@ -5,12 +5,12 @@ import { axiosInstanceNoAuth } from "../axiosApi";
 import InfiniteScroll from "../RecipeGrid/InifiniteScroll";
 import RecipeGrid from "../RecipeGrid/RecipeGrid";
 
-const UserPage = (props) => {
+const UserPage = () => {
   const { username } = useParams();
 
   return (
     <Fragment>
-      <h1>Welcome to {username}'s page</h1>
+      <h1>Profil de {username}</h1>
       <InfiniteScroll
         componentToScroll={RecipeGrid}
         axiosInstance={axiosInstanceNoAuth}
