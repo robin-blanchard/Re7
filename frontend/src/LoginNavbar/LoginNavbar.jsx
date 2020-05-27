@@ -28,7 +28,6 @@ function LoginNavbar(props) {
                 {localStorage.getItem("username")}
               </Nav.Link>
               <Nav.Link onClick={props.handleSignOut}>
-                {" "}
                 Se déconnecter <FaSignOutAlt />
               </Nav.Link>
             </Fragment>
