@@ -46,7 +46,7 @@ function RecipeDetail(props) {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [id]);
 
   const handleFork = () => {
     setShowAlert(false);
