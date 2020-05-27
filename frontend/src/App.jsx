@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
@@ -8,7 +8,6 @@ import MainRecipesPage from "./MainRecipesPage/MainRecipesPage";
 import RecipeDetail from "./RecipeDetail/RecipeDetail";
 import AddRecipe from "./AddModifyRecipe/AddRecipe";
 import ModifyRecipe from "./AddModifyRecipe/ModifyRecipe";
-import Login from "./Login/Login";
 import RegisterPage from "./RegisterPage/RegisterPage";
 import UserPage from "./UserPage/UserPage";
 
@@ -33,37 +32,36 @@ function App() {
   }, []);
 
   return (
-    <Fragment>
-      <LoginNavbar logged={logged} handleSignOut={handleSignOut} />
+    <BrowserRouter>
+      <LoginNavbar
+        logged={logged}
+        handleLogin={handleLogin}
+        handleSignOut={handleSignOut}
+      />
 
       <Col md={9} className="mx-auto">
-        <BrowserRouter>
-          <Switch>
-            <Route path="/recipes/mod_recipe/:id">
-              <ModifyRecipe />
-            </Route>
-            <Route exact path="/recipes/add_recipe">
-              <AddRecipe logged={logged} />
-            </Route>
-            <Route path="/recipes/:id">
-              <RecipeDetail />
-            </Route>
-            <Route path="/recipes/">
-              <MainRecipesPage />
-            </Route>
-            <Route path="/login">
-              <Login handleLogin={handleLogin} />
-            </Route>
-            <Route path="/register">
-              <RegisterPage handleLogin={handleLogin} />
-            </Route>
-            <Route path="/profile/:username">
-              <UserPage />
-            </Route>
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route path="/recipes/mod_recipe/:id">
+            <ModifyRecipe />
+          </Route>
+          <Route exact path="/recipes/add_recipe">
+            <AddRecipe logged={logged} />
+          </Route>
+          <Route path="/recipes/:id">
+            <RecipeDetail />
+          </Route>
+          <Route path="/recipes/">
+            <MainRecipesPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage handleLogin={handleLogin} />
+          </Route>
+          <Route path="/profile/:username">
+            <UserPage />
+          </Route>
+        </Switch>
       </Col>
-    </Fragment>
+    </BrowserRouter>
   );
 }
 

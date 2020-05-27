@@ -2,8 +2,12 @@ import React, { Fragment } from "react";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+
+import Login from "../Login/Login";
 
 function LoginNavbar(props) {
   return (
@@ -34,9 +38,21 @@ function LoginNavbar(props) {
               </Navbar.Text>
             </Fragment>
           ) : (
-            <Nav.Link href="/login">
-              Se connecter <FaSignInAlt />
-            </Nav.Link>
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={
+                <Popover>
+                  <Popover.Content>
+                    <Login handleLogin={props.handleLogin} />
+                  </Popover.Content>
+                </Popover>
+              }
+            >
+              <Nav.Link>
+                Se connecter <FaSignInAlt />
+              </Nav.Link>
+            </OverlayTrigger>
           )}
         </Nav>
       </Navbar.Collapse>

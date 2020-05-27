@@ -10,7 +10,6 @@ function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showFailAlert, setShowFailAlert] = useState(false);
-  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,9 +26,9 @@ function Login(props) {
         localStorage.setItem("refresh_token", response.data.refresh);
         localStorage.setItem("username", username);
         props.handleLogin();
-        history.push("/recipes");
       })
       .catch((error) => {
+        console.log(error);
         setShowFailAlert(true);
       });
   };
