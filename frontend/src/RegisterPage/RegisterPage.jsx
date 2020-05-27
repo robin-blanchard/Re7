@@ -86,7 +86,9 @@ const RegisterPage = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button type="submit">Créer mon compte</Button>
+        <Button type="submit" variant="outline-info">
+          Créer mon compte
+        </Button>
       </Form>
     </Fragment>
   );
