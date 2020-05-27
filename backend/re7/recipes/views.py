@@ -2,13 +2,13 @@ import json
 
 from django.http import QueryDict
 
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
 from rest_framework.pagination import LimitOffsetPagination
 
 
 from re7.recipes.models import Recipe, Product
-from re7.recipes.serializers import RecipeSerializer, ProductSerializer
+from re7.recipes.serializers import RecipeSerializer, RecipeNameSerializer, ProductSerializer
 
 
 class RecipesListView(generics.ListCreateAPIView):
@@ -86,3 +86,10 @@ class UserRecipesView(generics.ListAPIView):
     def get_queryset(self):
         username = self.kwargs["username"]
         return Recipe.objects.filter(creater__username=username).order_by('-update_date')
+
+
+class SearchRecipesView(generics.ListAPIView):
+    serializer_class = RecipeNameSerializer
+    search_fields = ["name"]
+    filter_backends = (filters.SearchFilter,)
+    queryset = Recipe.objects.only("id", "name").order_by("-update_date")
