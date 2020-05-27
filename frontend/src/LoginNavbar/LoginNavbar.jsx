@@ -41,6 +41,7 @@ function LoginNavbar(props) {
             <OverlayTrigger
               trigger="click"
               placement="bottom"
+              rootClose
               overlay={
                 <Popover>
                   <Popover.Content>
