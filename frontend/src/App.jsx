@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 
@@ -41,6 +41,9 @@ function App() {
 
       <Col md={9} className="mx-auto">
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/recipes/" />
+          </Route>
           <Route path="/recipes/mod_recipe/:id">
             <ModifyRecipe />
           </Route>
