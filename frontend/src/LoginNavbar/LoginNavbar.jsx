@@ -27,15 +27,10 @@ function LoginNavbar(props) {
               <Nav.Link href={`/profile/${localStorage.getItem("username")}`}>
                 {localStorage.getItem("username")}
               </Nav.Link>
-              <Navbar.Text>
-                <div
-                  onClick={props.handleSignOut}
-                  style={{ cursor: "pointer" }}
-                >
-                  {" "}
-                  Se déconnecter <FaSignOutAlt />
-                </div>
-              </Navbar.Text>
+              <Nav.Link onClick={props.handleSignOut}>
+                {" "}
+                Se déconnecter <FaSignOutAlt />
+              </Nav.Link>
             </Fragment>
           ) : (
             <OverlayTrigger
