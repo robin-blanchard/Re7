@@ -81,7 +81,8 @@ class ProductsListView(generics.ListCreateAPIView):
 
 class UserRecipesView(generics.ListAPIView):
     serializer_class = RecipeSerializer
+    pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         username = self.kwargs["username"]
-        return Recipe.objects.filter(creater__username=username)
+        return Recipe.objects.filter(creater__username=username).order_by('-update_date')
