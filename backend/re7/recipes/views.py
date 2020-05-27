@@ -93,3 +93,4 @@ class SearchRecipesView(generics.ListAPIView):
     search_fields = ["name"]
     filter_backends = (filters.SearchFilter,)
     queryset = Recipe.objects.only("id", "name").order_by("-update_date")
+    pagination_class = LimitOffsetPagination
