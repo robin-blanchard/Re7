@@ -10,14 +10,14 @@ const InfiniteScroll = (props) => {
     setIsFetching(true);
   };
 
-  const checkPageBottom = () => {
+  const checkPageBottom = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight
     ) {
       handlePageBottom();
     }
-  };
+  }, []);
 
   useEffect(() => {
     checkPageBottom();
@@ -25,7 +25,7 @@ const InfiniteScroll = (props) => {
     return () => window.removeEventListener("scroll", checkPageBottom);
   }, [items, checkPageBottom]);
 
-  const fetchMoreListItems = () => {
+  const fetchMoreListItems = useCallback(() => {
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
     const offset = items.length;
@@ -53,7 +53,7 @@ const InfiniteScroll = (props) => {
     return () => {
       source.cancel();
     };
-  };
+  }, [items, props.axiosInstance, props.limit, props.url]);
 
   useEffect(() => {
     if (!isFetching) return;
