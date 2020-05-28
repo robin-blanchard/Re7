@@ -94,9 +94,3 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
-
-class RecipeNameSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ("id", "name", "update_date")
-        model = Recipe

@@ -8,13 +8,16 @@ from rest_framework.pagination import LimitOffsetPagination
 
 
 from re7.recipes.models import Recipe, Product
-from re7.recipes.serializers import RecipeSerializer, RecipeNameSerializer, ProductSerializer
+from re7.recipes.serializers import RecipeSerializer, ProductSerializer
 
 
 class RecipesListView(generics.ListCreateAPIView):
     queryset = Recipe.objects.all().order_by('-update_date')
     serializer_class = RecipeSerializer
     pagination_class = LimitOffsetPagination
+
+    search_fields = ["name"]
+    filter_backends = (filters.SearchFilter,)
 
     def create(self, request, *args, **kwargs):
         data = request.data
@@ -86,11 +89,3 @@ class UserRecipesView(generics.ListAPIView):
     def get_queryset(self):
         username = self.kwargs["username"]
         return Recipe.objects.filter(creater__username=username).order_by('-update_date')
-
-
-class SearchRecipesView(generics.ListAPIView):
-    serializer_class = RecipeNameSerializer
-    search_fields = ["name"]
-    filter_backends = (filters.SearchFilter,)
-    queryset = Recipe.objects.all().order_by("-update_date")
-    pagination_class = LimitOffsetPagination
