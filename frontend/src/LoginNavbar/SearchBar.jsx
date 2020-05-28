@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import { axiosInstanceNoAuth } from "../axiosApi";
@@ -10,7 +10,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import ListGroup from "react-bootstrap/ListGroup";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useEffect } from "react";
+import Button from "react-bootstrap/Button";
+
+import { FaSearch } from "react-icons/fa";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -45,12 +47,7 @@ const SearchBar = () => {
     };
   }, [search, searchCategory]);
   return (
-    <Form
-      inline
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <Form inline>
       <InputGroup>
         <DropdownButton
           as={InputGroup.Prepend}
@@ -111,6 +108,21 @@ const SearchBar = () => {
             }}
           />
         </OverlayTrigger>
+        <InputGroup.Append>
+          <Link
+            to={{
+              pathname: `/search/`,
+              state: {
+                search: search,
+                searchCategory: searchCategory,
+              },
+            }}
+          >
+            <Button variant="secondary" type="submit">
+              <FaSearch />
+            </Button>
+          </Link>
+        </InputGroup.Append>
       </InputGroup>
     </Form>
   );
