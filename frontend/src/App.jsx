@@ -10,6 +10,7 @@ import AddRecipe from "./AddModifyRecipe/AddRecipe";
 import ModifyRecipe from "./AddModifyRecipe/ModifyRecipe";
 import RegisterPage from "./RegisterPage/RegisterPage";
 import UserPage from "./UserPage/UserPage";
+import SearchResultsPage from "./SearchResultsPage/SearchResultsPage";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -55,6 +56,9 @@ function App() {
           </Route>
           <Route path="/recipes/">
             <MainRecipesPage />
+          </Route>
+          <Route path="/search">
+            <SearchResultsPage />
           </Route>
           <Route path="/register">
             <RegisterPage handleLogin={handleLogin} />
