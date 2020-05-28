@@ -21,7 +21,7 @@ const SearchResultsPage = () => {
 
   useEffect(() => {
     const url =
-      "api/search/recipes".repeat(searchCategory === "Recettes") +
+      "api/recipes".repeat(searchCategory === "Recettes") +
       "auth/users".repeat(searchCategory === "Utilisateurs");
     setUrlSearch(url + ("?search=" + search).repeat(search !== ""));
   }, [search, searchCategory]);

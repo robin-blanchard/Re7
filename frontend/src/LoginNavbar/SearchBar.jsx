@@ -29,7 +29,7 @@ const SearchBar = () => {
     const source = CancelToken.source();
 
     const url =
-      "api/search/recipes".repeat(searchCategory === "Recettes") +
+      "api/recipes".repeat(searchCategory === "Recettes") +
       "auth/users".repeat(searchCategory === "Utilisateurs");
     const urlSearch = url + "?search=" + search + "&limit=5";
 
