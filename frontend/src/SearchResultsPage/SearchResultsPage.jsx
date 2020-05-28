@@ -26,7 +26,6 @@ const SearchResultsPage = () => {
     setUrlSearch(url + ("?search=" + search).repeat(search !== ""));
   }, [search, searchCategory]);
 
-  console.log(urlSearch);
   return (
     <Fragment>
       <br />
