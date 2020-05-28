@@ -20,20 +20,16 @@ const SearchResultsPage = () => {
   const [urlSearch, setUrlSearch] = useState("");
 
   useEffect(() => {
-    if (search === "") {
-      setUrlSearch("");
-      return;
-    }
-
     const url =
       "api/search/recipes".repeat(searchCategory === "Recettes") +
       "auth/users".repeat(searchCategory === "Utilisateurs");
-    setUrlSearch(url + "?search=" + search);
+    setUrlSearch(url + ("?search=" + search).repeat(search !== ""));
   }, [search, searchCategory]);
 
   console.log(urlSearch);
   return (
     <Fragment>
+      <br />
       <Form>
         <InputGroup>
           <DropdownButton
@@ -62,16 +58,13 @@ const SearchResultsPage = () => {
           />
         </InputGroup>
       </Form>
-      {search !== "" ? (
-        <InfiniteScroll
-          componentToScroll={RecipeGrid}
-          axiosInstance={axiosInstanceNoAuth}
-          limit={6}
-          url={urlSearch}
-        />
-      ) : (
-        "Pas de mot"
-      )}
+      <hr />
+      <InfiniteScroll
+        componentToScroll={RecipeGrid}
+        axiosInstance={axiosInstanceNoAuth}
+        limit={6}
+        url={urlSearch}
+      />
     </Fragment>
   );
 };
