@@ -26,7 +26,6 @@ const InfiniteScroll = (props) => {
   }, [items, checkPageBottom]);
 
   const fetchMoreListItems = () => {
-    console.log("fetch");
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
     const offset = items.length;
@@ -46,7 +45,6 @@ const InfiniteScroll = (props) => {
       .then((response) => {
         setIsFetching(false);
         setItems([...items, ...response.data.results]);
-        console.log("then");
       })
       .catch((error) => {
         console.log(error);
