@@ -18,6 +18,8 @@ const UserPage = () => {
         axiosInstance={axiosInstanceNoAuth}
         limit={6}
         url={"api/user/" + username}
+        linkUrl="/recipes/"
+        itemId="id"
       />
     </Fragment>
   );

@@ -11,10 +11,12 @@ function MainRecipesPage() {
       <h1 className="text-center">Voici les dernières recettes !</h1>
       <InfiniteScroll
         componentToScroll={Grid}
-        cardComponent={RecipeCard}
         axiosInstance={axiosInstanceNoAuth}
         limit={6}
         url={"api/recipes"}
+        cardComponent={RecipeCard}
+        linkUrl={"/recipes/"}
+        itemId="id"
       />
     </Fragment>
   );

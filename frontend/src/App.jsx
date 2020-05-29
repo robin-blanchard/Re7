@@ -63,7 +63,7 @@ function App() {
           <Route path="/register">
             <RegisterPage handleLogin={handleLogin} />
           </Route>
-          <Route path="/profile/:username">
+          <Route path="/users/:username">
             <UserPage />
           </Route>
         </Switch>

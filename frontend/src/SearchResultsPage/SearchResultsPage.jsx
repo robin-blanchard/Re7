@@ -10,6 +10,7 @@ import { axiosInstanceNoAuth } from "../axiosApi";
 import InfiniteScroll from "../Grid/InfiniteScroll";
 import Grid from "../Grid/Grid";
 import RecipeCard from "../Cards/RecipeCard";
+import UserCard from "../Cards/UserCard";
 
 const SearchResultsPage = () => {
   const data = useLocation();
@@ -61,10 +62,30 @@ const SearchResultsPage = () => {
       <hr />
       <InfiniteScroll
         componentToScroll={Grid}
-        cardComponent={RecipeCard}
+        cardComponent={
+          searchCategory === "Recettes"
+            ? RecipeCard
+            : searchCategory === "Utilisateurs"
+            ? UserCard
+            : UserCard
+        }
         axiosInstance={axiosInstanceNoAuth}
         limit={6}
         url={urlSearch}
+        linkUrl={
+          searchCategory === "Recettes"
+            ? "/recipes/"
+            : searchCategory === "Utilisateurs"
+            ? "/users/"
+            : "/"
+        }
+        itemId={
+          searchCategory === "Recettes"
+            ? "id"
+            : searchCategory === "Utilisateurs"
+            ? "username"
+            : "id"
+        }
       />
     </Fragment>
   );

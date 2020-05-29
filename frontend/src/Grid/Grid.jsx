@@ -20,7 +20,7 @@ function Grid(props) {
       cols.push(
         <Col md={4} key={3 * i + j}>
           <Link
-            to={`/recipes/${items[3 * i + j].id}`}
+            to={props.linkUrl + items[3 * i + j][props.itemId]}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <Card key={3 * i + j} item={items[3 * i + j]} />

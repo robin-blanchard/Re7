@@ -26,7 +26,7 @@ function LoginNavbar(props) {
           <SearchBar />
           {props.logged ? (
             <Fragment>
-              <Nav.Link href={`/profile/${localStorage.getItem("username")}`}>
+              <Nav.Link href={`/users/${localStorage.getItem("username")}`}>
                 {localStorage.getItem("username")}
               </Nav.Link>
               <Nav.Link onClick={props.handleSignOut}>
