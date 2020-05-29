@@ -25,6 +25,7 @@ class Recipe(models.Model):
     prep_time = models.PositiveSmallIntegerField()
     bake_time = models.PositiveSmallIntegerField()
     total_time = models.PositiveSmallIntegerField()
+    nb_covers = models.PositiveSmallIntegerField(null=True)
 
     photo = models.ImageField(
         upload_to="photos", default="recipe-default-image.jpg")
