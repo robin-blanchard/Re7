@@ -9,6 +9,9 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
+
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
 import ImageModal from "./ImageModal";
@@ -18,7 +21,8 @@ import "../image-center-crop.css";
 
 function RecipeDetail(props) {
   const { id } = useParams();
-  const [RecipeDetails, setRecipeDetails] = useState({});
+  const [recipeDetails, setRecipeDetails] = useState({});
+  const [nbCovers, setNbCovers] = useState(1);
   const [showModal, setShowModal] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -27,6 +31,21 @@ function RecipeDetail(props) {
   const history = useHistory();
 
   const current_user = localStorage.getItem("username");
+
+  useEffect(() => {
+    if (!recipeDetails.nb_covers) return;
+    setNbCovers(recipeDetails.nb_covers);
+  }, [recipeDetails]);
+
+  const onChangeShouldBePositive = (value, setValue) => {
+    if (isNaN(value)) {
+      return;
+    } else if (value === "" || value < 0) {
+      setValue(0);
+    } else {
+      setValue(Math.round(value));
+    }
+  };
 
   useEffect(() => {
     const CancelToken = Axios.CancelToken;
@@ -50,7 +69,7 @@ function RecipeDetail(props) {
 
   const handleFork = () => {
     setShowAlert(false);
-    const newUserRecipeDetails = JSON.parse(JSON.stringify(RecipeDetails));
+    const newUserRecipeDetails = JSON.parse(JSON.stringify(recipeDetails));
     newUserRecipeDetails["creater"] = localStorage.getItem("username");
 
     const photoUrlRegex = /https:\/\/storage\.googleapis\.com\/?[\w-]+\/((photos\/)?([\w-_]+\.(jpg|png)))\?/g;
@@ -108,32 +127,32 @@ function RecipeDetail(props) {
       />
       <ImageModal
         show={showModal}
-        title={RecipeDetails.name}
-        photo={RecipeDetails.photo}
+        title={recipeDetails.name}
+        photo={recipeDetails.photo}
         handleClose={() => setShowModal(false)}
       />
       <Container fluid>
         <Col md={9} className="mx-auto text-center">
           <div className="image-ccrop-container">
             <Image
-              src={RecipeDetails.photo}
+              src={recipeDetails.photo}
               className="image-ccrop"
               onClick={() => setShowModal(true)}
             />
           </div>
 
-          <h1>{RecipeDetails.name}</h1>
+          <h1>{recipeDetails.name}</h1>
           <Row>
             <Col>
-              <h3>{RecipeDetails.creater}</h3>
+              <h3>{recipeDetails.creater}</h3>
             </Col>
             <Col>
-              {RecipeDetails.creater === current_user ? (
+              {recipeDetails.creater === current_user ? (
                 <Link
                   to={{
                     pathname: `/recipes/mod_recipe/${id}`,
                     state: {
-                      recipeDetails: RecipeDetails,
+                      recipeDetails: recipeDetails,
                     },
                   }}
                 >
@@ -145,7 +164,7 @@ function RecipeDetail(props) {
                 </Button>
               )}
             </Col>
-            {RecipeDetails.creater === current_user ? (
+            {recipeDetails.creater === current_user ? (
               <Col>
                 <Button variant="secondary" onClick={handleDelete}>
                   Supprimer la recette
@@ -157,15 +176,15 @@ function RecipeDetail(props) {
           </Row>
 
           <Row>
-            <Col md={4} className="border">
+            <Col className="border">
               <Row>
                 <p className="mx-auto">Difficulté</p>
               </Row>
               <Row>
                 <p className="mx-auto">
-                  {RecipeDetails.difficulty === "1" ? (
+                  {recipeDetails.difficulty === "1" ? (
                     <WiDaySunny size={45} />
-                  ) : RecipeDetails.difficulty === "2" ? (
+                  ) : recipeDetails.difficulty === "2" ? (
                     <WiCloudy size={45} />
                   ) : (
                     <WiThunderstorm size={45} />
@@ -173,32 +192,72 @@ function RecipeDetail(props) {
                 </p>
               </Row>
             </Col>
-            <Col md={4} className="border">
+            <Col className="border">
               <Row>
                 <p className="mx-auto">Temps de préparation</p>
               </Row>
               <Row>
-                <p className="mx-auto">{RecipeDetails.prep_time}</p>
+                <p className="mx-auto">{recipeDetails.prep_time}</p>
               </Row>
             </Col>
-            <Col md={4} className="border">
+            <Col className="border">
               <Row>
                 <p className="mx-auto">Temps de cuisson</p>
               </Row>
               <Row>
-                <p className="mx-auto">{RecipeDetails.bake_time}</p>
+                <p className="mx-auto">{recipeDetails.bake_time}</p>
               </Row>
             </Col>
+            {recipeDetails.nb_covers ? (
+              <Col className="border">
+                <Row>
+                  <p className="mx-auto">Nombre de couverts</p>
+                </Row>
+                <Row>
+                  <InputGroup className="mx-3" style={{ width: "100%" }}>
+                    <InputGroup.Prepend
+                      onClick={() => {
+                        onChangeShouldBePositive(nbCovers - 1, setNbCovers);
+                      }}
+                    >
+                      <Button variant="outline-secondary">-</Button>
+                    </InputGroup.Prepend>
+                    <Form.Control
+                      value={nbCovers}
+                      className="text-center"
+                      onChange={(e) =>
+                        onChangeShouldBePositive(e.target.value, setNbCovers)
+                      }
+                    />
+                    <InputGroup.Append
+                      onClick={() => {
+                        onChangeShouldBePositive(nbCovers + 1, setNbCovers);
+                      }}
+                    >
+                      <Button variant="outline-secondary">+</Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </Row>
+              </Col>
+            ) : (
+              <></>
+            )}
           </Row>
 
           <Row>
             <Col md={4}>
               Ingrédients
               <ListGroup>
-                {RecipeDetails.ingredients ? (
-                  RecipeDetails.ingredients.map((ingredient, idx) => (
+                {recipeDetails.ingredients ? (
+                  recipeDetails.ingredients.map((ingredient, idx) => (
                     <ListGroup.Item key={idx}>
-                      {ingredient.product.name} : {ingredient.quantity}{" "}
+                      {ingredient.product.name} :{" "}
+                      {recipeDetails.nb_covers
+                        ? Math.round(
+                            (ingredient.quantity * nbCovers) /
+                              recipeDetails.nb_covers
+                          )
+                        : ingredient.quantity}{" "}
                       {ingredient.unit}
                     </ListGroup.Item>
                   ))
@@ -210,8 +269,8 @@ function RecipeDetail(props) {
             <Col md={8}>
               Instructions
               <ListGroup>
-                {RecipeDetails.instructions
-                  ? RecipeDetails.instructions
+                {recipeDetails.instructions
+                  ? recipeDetails.instructions
                       .sort((a, b) => (a.order < b.order ? -1 : 1))
                       .map((instruction, idx) => (
                         <ListGroup.Item key={idx}>
