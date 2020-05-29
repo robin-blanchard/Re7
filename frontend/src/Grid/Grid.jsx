@@ -5,27 +5,25 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import RecipeCard from "./RecipeCard/RecipeCard";
-
-function RecipeGrid(props) {
-  const recipesItems = props.items;
+function Grid(props) {
+  const items = props.items;
   const rows = [];
+  const Card = props.cardComponent;
 
-  for (var i = 0; i < Math.ceil(recipesItems.length / 3); i++) {
+  for (var i = 0; i < Math.ceil(items.length / 3); i++) {
     const cols = [];
     const limit =
-      i + 1 === Math.ceil(recipesItems.length / 3) &&
-      recipesItems.length % 3 !== 0
-        ? recipesItems.length % 3
+      i + 1 === Math.ceil(items.length / 3) && items.length % 3 !== 0
+        ? items.length % 3
         : 3;
     for (var j = 0; j < limit; j++) {
       cols.push(
         <Col md={4} key={3 * i + j}>
           <Link
-            to={`/recipes/${recipesItems[3 * i + j].id}`}
+            to={`/recipes/${items[3 * i + j].id}`}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
-            <RecipeCard key={3 * i + j} item={recipesItems[3 * i + j]} />
+            <Card key={3 * i + j} item={items[3 * i + j]} />
           </Link>
         </Col>
       );
@@ -39,4 +37,4 @@ function RecipeGrid(props) {
   return <Container>{rows}</Container>;
 }
 
-export default RecipeGrid;
+export default Grid;

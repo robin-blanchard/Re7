@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import { FaStopwatch } from "react-icons/fa";
 import { WiDaySunny, WiCloudy, WiThunderstorm } from "react-icons/wi";
 
-import "../../image-center-crop.css";
+import "../image-center-crop.css";
 
 function RecipeCard(props) {
   return (

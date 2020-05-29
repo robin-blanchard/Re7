@@ -66,7 +66,7 @@ const InfiniteScroll = (props) => {
   }, [props.url]);
 
   const ComponentToScroll = props.componentToScroll;
-  return <ComponentToScroll items={items} />;
+  return <ComponentToScroll items={items} {...props} />;
 };
 
 export default InfiniteScroll;

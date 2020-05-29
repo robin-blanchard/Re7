@@ -2,8 +2,9 @@ import React, { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstanceNoAuth } from "../axiosApi";
 
-import InfiniteScroll from "../RecipeGrid/InifiniteScroll";
-import RecipeGrid from "../RecipeGrid/RecipeGrid";
+import InfiniteScroll from "../Grid/InifiniteScroll";
+import Grid from "../Grid/Grid";
+import RecipeCard from "../RecipeCard/RecipeCard";
 
 const UserPage = () => {
   const { username } = useParams();
@@ -12,7 +13,8 @@ const UserPage = () => {
     <Fragment>
       <h1>Profil de {username}</h1>
       <InfiniteScroll
-        componentToScroll={RecipeGrid}
+        componentToScroll={Grid}
+        cardComponent={RecipeCard}
         axiosInstance={axiosInstanceNoAuth}
         limit={6}
         url={"api/user/" + username}

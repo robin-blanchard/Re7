@@ -7,8 +7,9 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 
 import { axiosInstanceNoAuth } from "../axiosApi";
-import InfiniteScroll from "../RecipeGrid/InifiniteScroll";
-import RecipeGrid from "../RecipeGrid/RecipeGrid";
+import InfiniteScroll from "../Grid/InifiniteScroll";
+import Grid from "../Grid/Grid";
+import RecipeCard from "../RecipeCard/RecipeCard";
 
 const SearchResultsPage = () => {
   const data = useLocation();
@@ -59,7 +60,8 @@ const SearchResultsPage = () => {
       </Form>
       <hr />
       <InfiniteScroll
-        componentToScroll={RecipeGrid}
+        componentToScroll={Grid}
+        cardComponent={RecipeCard}
         axiosInstance={axiosInstanceNoAuth}
         limit={6}
         url={urlSearch}
