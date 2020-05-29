@@ -9,7 +9,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { axiosInstanceNoAuth } from "../axiosApi";
 import InfiniteScroll from "../Grid/InfiniteScroll";
 import Grid from "../Grid/Grid";
-import RecipeCard from "../RecipeCard/RecipeCard";
+import RecipeCard from "../Cards/RecipeCard";
 
 const SearchResultsPage = () => {
   const data = useLocation();
