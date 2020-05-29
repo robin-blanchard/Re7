@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { axiosInstanceNoAuth } from "../axiosApi";
 
-import InfiniteScroll from "../Grid/InifiniteScroll";
+import InfiniteScroll from "../Grid/InfiniteScroll";
 import Grid from "../Grid/Grid";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
