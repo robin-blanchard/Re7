@@ -44,16 +44,8 @@ class Product(models.Model):
 
 
 class Ingredient(models.Model):
-    G = "g"
-    KG = "kg"
-    L = "L"
-    cL = "cL"
-    UNIT_MEASURES = ((G, "g"),
-                     (KG, "kg"),
-                     (L, "L"),
-                     (cL, "cL"))
     quantity = models.PositiveSmallIntegerField()
-    unit = models.CharField(max_length=5, choices=UNIT_MEASURES)
+    unit = models.CharField(max_length=25, blank=True)
 
     recipe = models.ForeignKey(
         Recipe, related_name="ingredients", on_delete=models.CASCADE)
