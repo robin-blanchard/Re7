@@ -80,3 +80,12 @@ When deploying for the first time, you also need to migrate and create a superus
 heroku run python manage.py migrate
 heroku run python manage.py createsuperuser
 ```
+
+## Next to-dos
+
+- Ingredients and times to accept floats
+- Drag and drop instructions
+- Comments popovers on instructions
+- Better Recipe details
+- Recipe Categories and filters
+- When submitting a form, capitalize products, name and instructions
