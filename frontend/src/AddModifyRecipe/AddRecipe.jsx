@@ -14,6 +14,7 @@ function AddRecipe(props) {
     bake_time: 0,
     total_time: 0,
     photo: null,
+    nb_covers: 1,
     ingredients: [
       {
         quantity: 0,
@@ -34,12 +35,10 @@ function AddRecipe(props) {
   const [recipeFormData, setRecipeFormData] = useState({});
 
   const handleSubmit = () => {
-    const orderedInstructions = recipeFormData["instructions"].map(
-      (item, idx) => ({
-        order: idx,
-        text: item.text,
-      })
-    );
+    const orderedInstructions = recipeFormData["instructions"].map((item, idx) => ({
+      order: idx,
+      text: item.text,
+    }));
 
     const formData = new FormData();
     formData.append("name", recipeFormData["name"]);
@@ -47,12 +46,10 @@ function AddRecipe(props) {
     formData.append("prep_time", recipeFormData["prep_time"]);
     formData.append("bake_time", recipeFormData["bake_time"]);
     formData.append("total_time", recipeFormData["total_time"]);
+    formData.append("nb_covers", recipeFormData["nb_covers"]);
     formData.append("creater", localStorage.getItem("username"));
 
-    formData.append(
-      "ingredients",
-      JSON.stringify(recipeFormData["ingredients"])
-    );
+    formData.append("ingredients", JSON.stringify(recipeFormData["ingredients"]));
     formData.append("instructions", JSON.stringify(orderedInstructions));
 
     if (!!recipeFormData["photo"]) {
@@ -80,17 +77,8 @@ function AddRecipe(props) {
   };
   return props.logged ? (
     <Fragment>
-      <SubmissionAlert
-        show={showAlert}
-        type={alertType}
-        unshowAlert={() => setShowAlert(false)}
-      />
-      <RecipeForm
-        initialState={initialState}
-        submitName={"Ajouter la recette"}
-        setRecipeFormData={setRecipeFormData}
-        handleSubmit={handleSubmit}
-      />
+      <SubmissionAlert show={showAlert} type={alertType} unshowAlert={() => setShowAlert(false)} />
+      <RecipeForm initialState={initialState} submitName={"Ajouter la recette"} setRecipeFormData={setRecipeFormData} handleSubmit={handleSubmit} />
     </Fragment>
   ) : (
     <div className="d-flex flex-row justify-content-center">

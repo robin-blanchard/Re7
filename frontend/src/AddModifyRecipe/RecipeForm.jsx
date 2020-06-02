@@ -14,38 +14,26 @@ import "./RecipeForm.css";
 
 const RecipeForm = (props) => {
   const [recipeName, setRecipeName] = useState(props.initialState["name"]);
-  const [difficulty, setDifficulty] = useState(
-    props.initialState["difficulty"]
-  );
+  const [difficulty, setDifficulty] = useState(props.initialState["difficulty"]);
   const [prepTime, setPrepTime] = useState(props.initialState["prep_time"]);
   const [bakeTime, setBakeTime] = useState(props.initialState["bake_time"]);
   const [totalTime, setTotalTime] = useState(props.initialState["total_time"]);
   const [photo, setPhoto] = useState(props.initialState["photo"]);
+  const [nbCovers, setNbCovers] = useState(props.initialState["nb_covers"]);
+  const [ingredients, addIngredient, deleteIngredient, updateIngredient, resetIngredients] = useElementsState(props.initialState["ingredients"]);
+  const [instructions, addInstruction, deleteInstruction, updateInstruction, resetInstructions] = useElementsState(props.initialState["instructions"]);
 
-  const [
-    ingredients,
-    addIngredient,
-    deleteIngredient,
-    updateIngredient,
-    resetIngredients,
-  ] = useElementsState(props.initialState["ingredients"]);
-
-  const [
-    instructions,
-    addInstruction,
-    deleteInstruction,
-    updateInstruction,
-    resetInstructions,
-  ] = useElementsState(props.initialState["instructions"]);
+  const [validated, setValidated] = useState(false);
 
   const setRecipeFormData = props.setRecipeFormData;
 
-  const onChangeShouldBePositive = (e, setValue) => {
-    if (e.target.value === "") {
-    } else if (e.target.value < 0) {
-      setValue(0);
-    } else {
-      setValue(Math.round(e.target.value));
+  const onChangePositiveNumber = (e, setValue, minValue = 0) => {
+    e.preventDefault();
+    const value = e.target.value;
+    if (value === "" || value < 0) setValue(minValue);
+    else if (isNaN(value) || !Number(value) & (Number(value) !== 0)) return;
+    else {
+      setValue(Number(value));
     }
   };
 
@@ -58,6 +46,7 @@ const RecipeForm = (props) => {
     setDifficulty("1");
     setPrepTime(0);
     setBakeTime(0);
+    setNbCovers(1);
     resetIngredients();
     resetInstructions();
   };
@@ -69,53 +58,42 @@ const RecipeForm = (props) => {
       prep_time: prepTime,
       bake_time: bakeTime,
       total_time: totalTime,
+      nb_covers: nbCovers,
       photo: photo,
       ingredients: ingredients,
       instructions: instructions,
     };
     setRecipeFormData(recipeFormData);
-  }, [
-    recipeName,
-    difficulty,
-    prepTime,
-    bakeTime,
-    totalTime,
-    photo,
-    ingredients,
-    instructions,
-    setRecipeFormData,
-  ]);
+  }, [recipeName, difficulty, prepTime, bakeTime, totalTime, nbCovers, photo, ingredients, instructions, setRecipeFormData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
-    const result = props.handleSubmit();
-    if (result === 0) {
-      clearForm();
+    const form = e.currentTarget;
+
+    if (form.checkValidity()) {
+      const result = props.handleSubmit();
+      if (result === 0) {
+        clearForm();
+      }
     }
+    setValidated(true);
   };
 
   return (
     <Fragment>
-      <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group controlId="form.ControlName">
           <Form.Label>Nom de la recette</Form.Label>
-          <Form.Control
-            value={recipeName}
-            onChange={(e) => setRecipeName(e.target.value)}
-          />
+          <Form.Control required value={recipeName} onChange={(e) => setRecipeName(e.target.value)} />
+          <Form.Control.Feedback type="invalid">Un nom est requis pour votre recette !</Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Photo</Form.Label>
           <Form.File
             id="custom-file"
-            label={
-              photo
-                ? photo.name
-                  ? photo.name
-                  : extractPhotoName(photo)
-                : "Photo"
-            }
+            label={photo ? (photo.name ? photo.name : extractPhotoName(photo)) : "Photo"}
             custom
             onChange={(e) => {
               setPhoto(e.target.files[0]);
@@ -125,11 +103,7 @@ const RecipeForm = (props) => {
 
         <Form.Group controlId="form.ControlDifficulty">
           <Form.Label>Difficulté</Form.Label>
-          <Form.Control
-            as="select"
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-          >
+          <Form.Control as="select" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
             <option value="1">Simple</option>
             <option value="2">Modéré</option>
             <option value="3">Difficile</option>
@@ -139,37 +113,34 @@ const RecipeForm = (props) => {
         <Form.Row>
           <Form.Group as={Col} controlId="form.ControlPrepTime">
             <Form.Label>Temps de préparation</Form.Label>
-            <Form.Control
-              type="number"
-              step="1"
-              value={prepTime}
-              onChange={(e) => onChangeShouldBePositive(e, setPrepTime)}
-            />
+            <Form.Control type="number" min="0" step="1" value={prepTime} onChange={(e) => onChangePositiveNumber(e, setPrepTime)} />
+            <Form.Control.Feedback type="invalid">Cette valeur doit être positive</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="form.ControlBakeTime">
             <Form.Label>Temps de cuisson</Form.Label>
-            <Form.Control
-              type="number"
-              step="1"
-              value={bakeTime}
-              onChange={(e) => onChangeShouldBePositive(e, setBakeTime)}
-            />
+            <Form.Control type="number" min="0" step="1" value={bakeTime.toString().replace(/^0+[^0]+/, "")} onChange={(e) => onChangePositiveNumber(e, setBakeTime)} />
+            <Form.Control.Feedback type="invalid">Cette valeur doit être positive</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="form.ControlBakeTime">
             <Form.Label>Temps total</Form.Label>
-            <Form.Control type="number" disabled value={totalTime} />
+            <Form.Control type="number" min="0" disabled value={totalTime} />
+            <Form.Control.Feedback type="invalid">Cette valeur doit être positive</Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>
+          <Form.Group as={Col} controlId="form.ControlNbCovers">
+            <Form.Label>Nombre de couverts</Form.Label>
+            <Form.Control type="number" min="1" step="1" value={nbCovers} onChange={(e) => onChangePositiveNumber(e, setNbCovers, 1)} />
+            <Form.Control.Feedback type="invalid">Votre recette ne va pas vous nourrir si elle ne donne au moins 1 couvert...</Form.Control.Feedback>
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
           <Col>
             <Form.Label>Ingrédients</Form.Label>
-            <Button
-              className="plus-btn"
-              onClick={() => addIngredient()}
-              variant="outline-dark"
-            >
+            <Button className="plus-btn" onClick={() => addIngredient()} variant="outline-dark">
               <FaPlus />
             </Button>
           </Col>
@@ -180,9 +151,10 @@ const RecipeForm = (props) => {
             <Form.Group as={Col} md={2}>
               <Form.Control
                 type="number"
+                min="0"
                 value={ingredientItem.quantity}
                 onChange={(e) => {
-                  onChangeShouldBePositive(e, (value) => {
+                  onChangePositiveNumber(e, (value) => {
                     updateIngredient(idx, "quantity", value);
                   });
                 }}
@@ -202,15 +174,17 @@ const RecipeForm = (props) => {
               </Form.Control>
             </Form.Group>
 
-            <p style={{ alignSelf: "center" }}>de</p>
+            <Form.Group>de</Form.Group>
 
             <Form.Group as={Col} md={3}>
               <Form.Control
+                required
                 value={ingredientItem.product.name}
                 onChange={(e) => {
                   updateIngredient(idx, "product", { name: e.target.value });
                 }}
               />
+              <Form.Control.Feedback type="invalid">Le nom de l'ingrédient est nécessaire. Vous pouvez aussi supprimer cette ligne avec la croix.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col}>
@@ -248,11 +222,13 @@ const RecipeForm = (props) => {
           <Form.Row key={idx}>
             <Form.Group as={Col} md={2}>
               <Form.Control
+                required
                 value={instructionItem.text}
                 onChange={(e) => {
                   updateInstruction(idx, "text", e.target.value);
                 }}
               />
+              <Form.Control.Feedback type="invalid">L'instruction est nécessaire. Vous pouvez aussi supprimer cette ligne avec la croix.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col}>
