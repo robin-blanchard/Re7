@@ -14,7 +14,7 @@ function RecipeCard(props) {
       <div className="image-ccrop-container">
         <Card.Img
           variant="top"
-          src={props.item.photo}
+          src={props.item.photo ? props.item.photo : "https://icons-for-free.com/iconfiles/png/512/bakery+svglinecolor+recipe+book-1319964872908984700.png"}
           className="image-ccrop"
         />
       </div>
@@ -27,15 +27,7 @@ function RecipeCard(props) {
             <br />
             {props.item.total_time}
           </Col>
-          <Col className="text-center">
-            {props.item.difficulty === "1" ? (
-              <WiDaySunny size={45} />
-            ) : props.item.difficulty === "2" ? (
-              <WiCloudy size={45} />
-            ) : (
-              <WiThunderstorm size={45} />
-            )}
-          </Col>
+          <Col className="text-center">{props.item.difficulty === "1" ? <WiDaySunny size={45} /> : props.item.difficulty === "2" ? <WiCloudy size={45} /> : <WiThunderstorm size={45} />}</Col>
         </Row>
       </Card.Body>
     </Card>

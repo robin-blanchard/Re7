@@ -81,10 +81,7 @@ function RecipeDetail(props) {
     delete newUserRecipeDetails["update_date"];
 
     axiosInstanceAuth
-      .post(
-        process.env.REACT_APP_BACKEND_URL + "api/recipes",
-        newUserRecipeDetails
-      )
+      .post(process.env.REACT_APP_BACKEND_URL + "api/recipes", newUserRecipeDetails)
       .then(function (response) {
         console.log(response);
         setShowAlert(true);
@@ -120,22 +117,13 @@ function RecipeDetail(props) {
 
   return (
     <Container>
-      <SubmissionAlert
-        type={alertType}
-        show={showAlert}
-        unshowAlert={() => setShowAlert(false)}
-      />
-      <ImageModal
-        show={showModal}
-        title={recipeDetails.name}
-        photo={recipeDetails.photo}
-        handleClose={() => setShowModal(false)}
-      />
+      <SubmissionAlert type={alertType} show={showAlert} unshowAlert={() => setShowAlert(false)} />
+      <ImageModal show={showModal} title={recipeDetails.name} photo={recipeDetails.photo} handleClose={() => setShowModal(false)} />
       <Container fluid>
         <Col md={9} className="mx-auto text-center">
           <div className="image-ccrop-container">
             <Image
-              src={recipeDetails.photo}
+              src={recipeDetails.photo ? recipeDetails.photo : "https://icons-for-free.com/iconfiles/png/512/bakery+svglinecolor+recipe+book-1319964872908984700.png"}
               className="image-ccrop"
               onClick={() => setShowModal(true)}
             />
@@ -181,15 +169,7 @@ function RecipeDetail(props) {
                 <p className="mx-auto">Difficulté</p>
               </Row>
               <Row>
-                <p className="mx-auto">
-                  {recipeDetails.difficulty === "1" ? (
-                    <WiDaySunny size={45} />
-                  ) : recipeDetails.difficulty === "2" ? (
-                    <WiCloudy size={45} />
-                  ) : (
-                    <WiThunderstorm size={45} />
-                  )}
-                </p>
+                <p className="mx-auto">{recipeDetails.difficulty === "1" ? <WiDaySunny size={45} /> : recipeDetails.difficulty === "2" ? <WiCloudy size={45} /> : <WiThunderstorm size={45} />}</p>
               </Row>
             </Col>
             <Col className="border">
@@ -222,13 +202,7 @@ function RecipeDetail(props) {
                     >
                       <Button variant="outline-secondary">-</Button>
                     </InputGroup.Prepend>
-                    <Form.Control
-                      value={nbCovers}
-                      className="text-center"
-                      onChange={(e) =>
-                        onChangeShouldBePositive(e.target.value, setNbCovers)
-                      }
-                    />
+                    <Form.Control value={nbCovers} className="text-center" onChange={(e) => onChangeShouldBePositive(e.target.value, setNbCovers)} />
                     <InputGroup.Append
                       onClick={() => {
                         onChangeShouldBePositive(nbCovers + 1, setNbCovers);
@@ -251,14 +225,7 @@ function RecipeDetail(props) {
                 {recipeDetails.ingredients ? (
                   recipeDetails.ingredients.map((ingredient, idx) => (
                     <ListGroup.Item key={idx}>
-                      {ingredient.product.name} :{" "}
-                      {recipeDetails.nb_covers
-                        ? Math.round(
-                            (ingredient.quantity * nbCovers) /
-                              recipeDetails.nb_covers
-                          )
-                        : ingredient.quantity}{" "}
-                      {ingredient.unit}
+                      {ingredient.product.name} : {recipeDetails.nb_covers ? Math.round((ingredient.quantity * nbCovers) / recipeDetails.nb_covers) : ingredient.quantity} {ingredient.unit}
                     </ListGroup.Item>
                   ))
                 ) : (
@@ -270,13 +237,7 @@ function RecipeDetail(props) {
               Instructions
               <ListGroup>
                 {recipeDetails.instructions
-                  ? recipeDetails.instructions
-                      .sort((a, b) => (a.order < b.order ? -1 : 1))
-                      .map((instruction, idx) => (
-                        <ListGroup.Item key={idx}>
-                          {instruction.text}
-                        </ListGroup.Item>
-                      ))
+                  ? recipeDetails.instructions.sort((a, b) => (a.order < b.order ? -1 : 1)).map((instruction, idx) => <ListGroup.Item key={idx}>{instruction.text}</ListGroup.Item>)
                   : "Ingredients"}
               </ListGroup>
             </Col>

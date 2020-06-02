@@ -28,7 +28,7 @@ class Recipe(models.Model):
     nb_covers = models.PositiveSmallIntegerField(null=True)
 
     photo = models.ImageField(
-        upload_to="photos", default="recipe-default-image.jpg")
+        upload_to="photos", null=True)
 
     def __str__(self):
         return self.name
