@@ -3,6 +3,9 @@ import React, { useState, useEffect, Fragment } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 import { FaPlus, FaTimes } from "react-icons/fa";
 
@@ -161,20 +164,32 @@ const RecipeForm = (props) => {
               />
             </Form.Group>
 
-            <Form.Group as={Col} md={1}>
-              <Form.Control
-                as="select"
-                value={ingredientItem.unit}
-                onChange={(e) => {
-                  updateIngredient(idx, "unit", e.target.value);
-                }}
-              >
-                <option>g</option>
-                <option>kg</option>
-              </Form.Control>
+            <Form.Group as={Col} md={3}>
+              <InputGroup>
+                <DropdownButton as={InputGroup.Prepend} variant="outline-secondary" title="">
+                  {["g", "kg", "L", "cL", "mL"].map((unitType, unitIdx) => (
+                    <Dropdown.Item
+                      name={unitType}
+                      key={unitIdx}
+                      onClick={(e) => {
+                        updateIngredient(idx, "unit", unitType);
+                      }}
+                    >
+                      {unitType}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+                <Form.Control
+                  value={ingredientItem.unit}
+                  placeholder="unités"
+                  onChange={(e) => {
+                    updateIngredient(idx, "unit", e.target.value);
+                  }}
+                />
+              </InputGroup>
             </Form.Group>
 
-            <Form.Group>de</Form.Group>
+            {ingredientItem.unit !== "" ? <Form.Group>de</Form.Group> : ""}
 
             <Form.Group as={Col} md={3}>
               <Form.Control
